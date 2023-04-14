@@ -1,0 +1,19 @@
+
+{% load django_bootstrap5 %}
+
+    <div class="login-form">
+        <form method="post">
+            <div class="login">
+                {% csrf_token %}
+                {% bootstrap_form form %}
+                {% bootstrap_button button_type="submit" content='Войти' %}
+            </div>
+        </form>
+    </div>
+    <div class="login-register-form">
+        <p style="font-size:14px; text-align:center">У вас нет аккаунта?
+            <a href="{% url 'register' %}">Зарегестрироваться</a>
+        </p>
+    </div>
+
+
