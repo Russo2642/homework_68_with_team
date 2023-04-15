@@ -20,6 +20,11 @@ class Account(AbstractUser):
         max_length=15,
         verbose_name='Телефон'
     )
+    is_employer = models.BooleanField(
+        null=False,
+        blank=False,
+        default=False
+    )
 
     USERNAME_FIELD = 'username'
     REQUIRED_FIELDS = []

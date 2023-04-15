@@ -24,6 +24,7 @@ class CustomUserCreationForm(forms.ModelForm):
     class Meta:
         model = get_user_model()
         fields = (
+            'is_employer',
             'username',
             'password',
             'password_confirm',
