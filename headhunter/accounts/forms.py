@@ -53,7 +53,8 @@ class CustomUserCreationForm(forms.ModelForm):
         user.save()
         if user.is_employer:
             user.groups.add(1)
-        user.groups.add(2)
+        else:
+            user.groups.add(2)
         user.save()
         return user
 
