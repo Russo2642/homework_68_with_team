@@ -1,0 +1,18 @@
+{% if user_obj.avatar %}
+<img class="avatar" src="{{ user_obj.avatar.url }}" alt="user picture">
+{% else %}
+<img style="width:100px; height:100px"
+     src="https://abrakadabra.fun/uploads/posts/2021-12/thumbs/1640528649_39-abrakadabra-fun-p-serii-chelovek-na-avu-44.jpg"
+     alt="user picture">
+{% endif %}
+
+<p>{{ user_obj.username }}</p>
+<p>{{ user_obj.first_name }}</p>
+<p>{{ user_obj.last_name }}</p>
+<p>{{ user_obj.phone }}</p>
+<p>{{ user_obj.email }}</p>
+
+{% if user_obj == request.user %}
+<button><a href="{% url 'change' user_obj.pk %}" style="text-decoration:None; color:black;">Редактировать
+    профиль</a></button>
+{% endif %}
