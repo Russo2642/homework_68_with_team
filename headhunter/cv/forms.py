@@ -1,5 +1,8 @@
-from cv.models import CV
 from django import forms
+
+from cv.models import CV
+
+from cv.models.cv import JobExperience
 
 
 class CVForm(forms.ModelForm):
@@ -20,11 +23,7 @@ class CVForm(forms.ModelForm):
             'telegram',
             'whatsapp',
             'linkedin',
-            'facebook',
-            'work_place',
-            'work_exp',
-            'work_position',
-            'work_description'
+            'facebook'
         )
         labels = {
             'title': 'Название предпочитаемой должности*',
@@ -41,9 +40,22 @@ class CVForm(forms.ModelForm):
             'telegram': 'Telegram(ссылка)*',
             'whatsapp': 'Whatsapp(ссылка)',
             'linkedin': 'LinkedIn(ссылка)',
-            'facebook': 'Facebook(ссылка)',
-            'work_place': 'Место работы',
-            'work_exp': 'Стаж',
-            'work_position': 'Должность',
-            'work_description': 'Обязанности'
+            'facebook': 'Facebook(ссылка)'
+        }
+
+
+class JobExpForm(forms.ModelForm):
+    class Meta:
+        model = JobExperience
+        fields = (
+            'job_place',
+            'job_exp',
+            'job_position',
+            'job_description'
+        )
+        labels = {
+            'job_place': 'Место работы',
+            'job_exp': 'Стаж',
+            'job_position': 'Должность',
+            'job_description': 'Обязанности'
         }
