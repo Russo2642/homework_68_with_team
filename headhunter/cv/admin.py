@@ -2,6 +2,8 @@ from django.contrib import admin
 
 from cv.models import CV
 
+from cv.models.cv import JobExperience
+
 
 class CVAdmin(admin.ModelAdmin):
     list_display = (
@@ -24,4 +26,15 @@ class CVAdmin(admin.ModelAdmin):
     )
 
 
+class JobExpAdmin(admin.ModelAdmin):
+    list_display = (
+        'id',
+        'job_place',
+        'job_exp',
+        'job_position',
+        'job_description'
+    )
+
+
 admin.site.register(CV, CVAdmin)
+admin.site.register(JobExperience, JobExpAdmin)
