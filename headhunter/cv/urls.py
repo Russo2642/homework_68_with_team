@@ -1,6 +1,14 @@
 from django.urls import path
 
-from cv.views.cv import CVCreateView, CVDetailView, JobExpCreateView, CVUpdateView, JobExpUpdateView, UpdateButtonView
+from cv.views.cv import (
+    CVCreateView,
+    CVDetailView,
+    JobExpCreateView,
+    CVUpdateView,
+    JobExpUpdateView,
+    UpdateButtonView,
+    IsPublishedView
+)
 
 from cv.views.base import IndexView
 
@@ -11,6 +19,6 @@ urlpatterns = [
     path('cv/<int:pk>/about_me/update', CVUpdateView.as_view(), name='cv_update'),
     path('cv/<int:pk>/create/about_job/', JobExpCreateView.as_view(), name='job_create'),
     path('cv/<int:pk>/about_job/update/', JobExpUpdateView.as_view(), name='job_update'),
-
-    path('cv/<int:pk>/update_button', UpdateButtonView.as_view(), name='update_button')
+    path('cv/<int:pk>/update_button', UpdateButtonView.as_view(), name='update_button'),
+    path('cv/<int:pk>/publishing/', IsPublishedView.as_view(), name='publishing')
 ]

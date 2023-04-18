@@ -59,6 +59,13 @@
         <form action="{% url 'update_button' cv.pk %}" method="post"> {% csrf_token %}
             <button class="btn btn-success" type="submit">Обновить</button>
         </form>
+        <form action="{% url 'publishing' cv.pk %}" method="post"> {% csrf_token %}
+            {% if cv.is_published %}
+            <button class="btn btn-success" type="submit">Снять с публикации</button>
+            {% else %}
+            <button class="btn btn-success" type="submit">Опубликовать</button>
+            {% endif %}
+        </form>
         </p>
     </div>
     {% empty %}
