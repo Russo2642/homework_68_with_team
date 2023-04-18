@@ -41,9 +41,11 @@
         <tr>
             <td>
                 {% if user_obj == request.user %}
-                <a class="link-edit" href="{% url 'change' request.user.pk %}"
-                   style="text-decoration:None; border-style:None;">Редактировать профиль</a>
+                <button type="button" class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#ModalChangeProfile">
+                    Редактировать профиль
+                </button>
                 {% endif %}
+                {% include 'partial/user_change.html' %}
             </td>
         </tr>
         </tbody>
@@ -87,67 +89,4 @@
     {% endfor %}
 </main>
 
-
-<div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-sm">
-        <div class="modal-content">
-            <h5 class="modal-title">Редактирование профиля</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-        <form id="formEdit" action="">{% csrf_token %}
-            <div class="modal-body">
-                <div class="form-group validate">
-                    <input type="image" name="avatar" class="form-control" placeholder="">
-                    <small class="text-red text-muted mySpan"></small>
-                </div>
-                <div class="form-group validate">
-                    <input type="text" name="first_name" class="form-control" placeholder="">
-                    <small class="text-red text-muted mySpan"></small>
-                </div>
-                <div class="form-group validate">
-                    <input type="text" name="last_name" class="form-control" placeholder="">
-                    <small class="text-red text-muted mySpan"></small>
-                </div>
-                <div class="form-group validate">
-                    <input type="text" name="email" class="form-control" placeholder="">
-                    <small class="text-red text-muted mySpan"></small>
-                </div>
-
-                <div class="form-group validate">
-                    <input type="text" name="phone" class="form-control" placeholder="">
-                    <small class="text-red text-muted mySpan"></small>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
-                <button type="submit" class="btn btn-success btbUpdate" data-dismiss="modal">Редактировать</button>
-            </div>
-        </form>
-    </div>
-</div>
-
 {% endblock %}
-<script src="https://code.jquery.com/jquery-3.6.1.js" integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI="crossorigin="anonymous"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
-<script>
-    $("#user-table tbody").on("click", ".link-edit", function(e){
-        e.preventDefault();
-        var $this = $(this);
-        let avatar = $this.parents(".record").find('td').eq(0).text();
-        let first_name = $this.parents(".record").find('td').eq(1).text();
-        let last_name = $this.parents(".record").find('td').eq(1).text();
-        let email= $this.parents(".record").find('td').eq(2).text();
-        let phone = $this.parents(".record").find('td').eq(3).text();
-        $("#formEdit input[name='avatar']").val(avatar);
-        $("#formEdit input[name='first_name']").val(first_name);
-        $("#formEdit input[name='last_name']").val(last_name);
-        $("#formEdit input[name='email']").val(email);
-        $("#formEdit input[name='phone']").val(phone);
-        $("#editModal").modal("show");
-        return false;
-    });
-
-
-</script>
