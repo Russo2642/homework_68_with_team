@@ -1,14 +1,19 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'base/base.html' %}
+{% load static %}
+{% load django_bootstrap5 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+{% bootstrap_messages %}
+{% block content %}
 {{ cv.title }}
-{{ cv.get_category_display }}
-{{ cv.salary }}
+<p>{{ cv.get_category_display }}</p>
+<p>{{ cv.salary }}</p>
+<a href="{% url 'cv_update' cv.pk %}" class="btn btn-success">Редактировать личные данные</a>
 
-{{ job_exp.job_place }}
-</body>
-</html>
+{% for job in cv.job_exp.all %}
+<p>{{ job.job_place }}</p>
+<p>{{ job.job_exp }}</p>
+<p><a href="{% url 'job_update' job.pk %}" class="btn btn-success">Редактировать опыт работы</a></p>
+{% endfor %}
+
+{% endblock %}
