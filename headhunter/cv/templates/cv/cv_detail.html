@@ -5,15 +5,145 @@
 {% bootstrap_javascript %}
 {% bootstrap_messages %}
 {% block content %}
-{{ cv.title }}
-<p>{{ cv.get_category_display }}</p>
-<p>{{ cv.salary }}</p>
-<a href="{% url 'cv_update' cv.pk %}" class="btn btn-warning">Редактировать личные данные</a>
 
-{% for job in cv.job_exp.all %}
-<p>{{ job.job_place }}</p>
-<p>{{ job.job_exp }}</p>
-<p><a href="{% url 'job_update' job.pk %}" class="btn btn-warning">Редактировать опыт работы</a></p>
-{% endfor %}
+<h1>{{ cv.title }}</h1>
+
+<main class="data">
+    <div>
+        <h4>Направление</h4>
+        <ul>
+            <li>{{ cv.get_category_display }}</li>
+        </ul>
+    </div>
+    <div>
+        <h4>Желаемый уровень дохода</h4>
+        <ul>
+            <li>{{ cv.salary }} тенге</li>
+        </ul>
+    </div>
+    <div>
+        <h4>Электронная почта</h4>
+        <ul>
+            <li>{{ cv.email }}</li>
+        </ul>
+    </div>
+    <div>
+        <h4>Номер телефона</h4>
+        <ul>
+            <li>{{ cv.phone }}</li>
+        </ul>
+    </div>
+    <div>
+        <h4>Дата рождения</h4>
+        <ul>
+            <li>{{ cv.date_birth }}</li>
+        </ul>
+    </div>
+    <div>
+        <h4>Пол</h4>
+        <ul>
+            <li>{{ cv.get_sex_display }}</li>
+        </ul>
+    </div>
+    <div>
+        <h4>Семейное положение</h4>
+        <ul>
+            <li>{{ cv.get_marital_status_display }}</li>
+        </ul>
+    </div>
+    <div>
+        <h4>Адрес 1</h4>
+        {% if cv.address1 %}
+        <ul>
+            <li>{{ cv.address1 }}</li>
+        </ul>
+        {% else %}
+        <ul>
+            <li>Не указано</li>
+        </ul>
+        {% endif %}
+    </div>
+    <div>
+        <h4>Адрес 2</h4>
+        {% if cv.address2 %}
+        <ul>
+            <li>{{ cv.address2 }}</li>
+        </ul>
+        {% else %}
+        <ul>
+            <li>Не указано</li>
+        </ul>
+        {% endif %}
+    </div>
+    <div>
+        <h4>Город проживания</h4>
+        <ul>
+            <li>{{ cv.get_city_display }}</li>
+        </ul>
+    </div>
+    <div class="social-network">
+        <h4>Соц сети</h4>
+        <a style="width:15px;" href="{{ cv.telegram }}"><i class="fa-brands fa-telegram fa-xl"></i></a>
+        {% if cv.whatsapp %}
+            <a style="width:15px;" href="{{ cv.whatsapp }}"><i class="fa-brands fa-whatsapp fa-xl"></i></a>
+        {% endif %}
+
+        {% if cv.linkedin %}
+            <a style="width:15px;" href="{{ cv.linkedin }}"><i class="fa-brands fa-linkedin fa-xl"></i></a>
+        {% endif %}
+
+        {% if cv.facebook %}
+            <a style="width:15px;" href="{{ cv.facebook }}"><i class="fa-brands fa-facebook fa-xl"></i></a>
+        {% endif %}
+    </div>
+    <br>
+    <p><a href="{% url 'cv_update' cv.pk %}" class="btn btn-outline-dark">Редактировать личные данные</a></p>
+    <br>
+
+    <br>
+    <h1>Опыт работы</h1>
+    <br>
+    {% for job in cv.job_exp.all %}
+    <div>
+        <h4>Название компании</h4>
+        <ul>
+            <li>{{ job.job_place }}</li>
+        </ul>
+    </div>
+    <div>
+        <h4>Стаж</h4>
+        {% if job.job_exp == 1 %}
+        <ul>
+            <li>{{ job.job_exp }} год</li>
+        </ul>
+        {% elif job.job_exp > 1 and job.job_exp <= 4.5 %}
+        <ul>
+            <li>{{ job.job_exp }} года</li>
+        </ul>
+        {% else %}
+        <ul>
+            <li>{{ job.job_exp }} лет</li>
+        </ul>
+        {% endif %}
+    </div>
+    <div>
+        <h4>Должность</h4>
+        <ul>
+            <li>{{ job.job_position }}</li>
+        </ul>
+    </div>
+    <div>
+        <h4>Обязанности</h4>
+        <p>{{ job.job_description }}</p>
+    </div>
+    <br>
+    <p><a href="{% url 'job_update' job.pk %}" class="btn btn-outline-dark">Редактировать опыт работы</a></p>
+    {% empty %}
+    <div>
+        <h4>Опыт работы отсутствует</h4>
+    </div>
+    {% endfor %}
+</main>
+
 
 {% endblock %}
