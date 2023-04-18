@@ -4,6 +4,7 @@ from cv.models.cv import CV
 from cv.models import JobExperience
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse
+from django.views import View
 from django.views.generic import DetailView, CreateView, UpdateView
 
 
@@ -59,3 +60,10 @@ class JobExpUpdateView(UpdateView):
 
     def get_success_url(self):
         return reverse('cv_detail', kwargs={'pk': self.object.cv_id})
+
+
+class UpdateButtonView(View):
+    def post(self, request, pk):
+        cv = get_object_or_404(CV, pk=pk)
+        cv.save()
+        return redirect(request.META.get('HTTP_REFERER', '/'))

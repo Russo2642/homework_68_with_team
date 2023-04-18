@@ -56,7 +56,9 @@
         <p>Обновлено: {{ cv.updated_at }}</p>
         <p>
             <a href="{% url 'cv_detail' cv.pk %}" class="btn btn-primary read_more">Посмотреть резюме</a>
-            <a href="{% url 'index' %}" class="btn btn-success">Обновить</a>
+        <form action="{% url 'update_button' cv.pk %}" method="post"> {% csrf_token %}
+            <button class="btn btn-success" type="submit">Обновить</button>
+        </form>
         </p>
     </div>
     {% empty %}

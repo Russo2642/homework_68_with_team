@@ -145,3 +145,6 @@ class CV(models.Model):
 
     def __str__(self):
         return f"{self.user} - {self.title} - {self.category}"
+
+    class Meta:
+        ordering = ['-updated_at']
