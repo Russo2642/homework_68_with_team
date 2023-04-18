@@ -10,26 +10,58 @@
 {% endblock %}
 {% block content %}
 
-{% if user_obj.avatar %}
-<img class="avatar" src="{{ user_obj.avatar.url }}" alt="user picture">
-{% else %}
-<img style="width:100px; height:100px"
-     src="../../../uploads/user_pic/default.jpg"
-     alt="user picture">
-{% endif %}
 
-<p>{{ user_obj.username }}</p>
-<p>{{ user_obj.first_name }}</p>
-<p>{{ user_obj.last_name }}</p>
-<p>{{ user_obj.phone }}</p>
-<p>{{ user_obj.email }}</p>
+<div class="container">
 
-{% if user_obj == request.user %}
-<button><a href="{% url 'change' user_obj.pk %}" style="text-decoration:None; color:black;">Редактировать
-    профиль</a></button>
-{% endif %}
+    <table>
+        <tr>
+            <td>
+                {% if user_obj.avatar %}
+                <img class="avatar" src="{{ user_obj.avatar.url }}" alt="user picture">
+                {% else %}
+                <img class="avatar" style="width:100px; height:100px"
+                     src="../../../uploads/user_pic/default.jpg"
+                     alt="user picture">
+                {% endif %}
+            </td>
+        </tr>
+        <tr>
+            <td>Имя</td>
+            <td>{{ user_obj.first_name }} {{ user_obj.last_name }}</td>
+        </tr>
+        <tr>
+            <td>Телефон</td>
+            <td>{{ user_obj.phone }}</td>
+        </tr>
+        <tr>
+            <td>Электронная почта</td>
+            <td>{{ user_obj.email }}</td>
+        </tr>
+    </table>
+    {% if user_obj == request.user %}
+    <a href="{% url 'change' user_obj.pk %}" style="text-decoration:None; border-style:None;">
+        Редактировать профиль</a>
+    {% endif %}
+</div>
+<div class="create-cv">
+    {% if user_obj == request.user %}
+    <button><a href="{% url 'cv_create' %}" style="text-decoration:None; color:black;">Создать резюме</a></button>
+    {% endif %}
+</div>
 
-{% if user_obj == request.user %}
-<button><a href="{% url 'cv_create' %}" style="text-decoration:None; color:black;">Создать резюме</a></button>
-{% endif %}
+<div class="row">
+    {% for cv in user_obj.cv.all %}
+    <div class="notes">
+        <h2>{{ cv.title }}</h2>
+        <p>Обновлено: {{ cv.updated_at }}</p>
+        <p>
+            <a href="{% url 'cv_detail' cv.pk %}" class="btn btn-primary read_more">Посмотреть резюме</a>
+            <a href="{% url 'index' %}" class="btn btn-success">Обновить</a>
+        </p>
+    </div>
+    {% empty %}
+    <h1><p>CVs not found</p></h1>
+    {% endfor %}
+</div>
+
 {% endblock %}

@@ -35,3 +35,11 @@ class JobExperience(models.Model):
         max_length=3000,
         verbose_name='Обязанности'
     )
+    created_at = models.DateTimeField(
+        auto_now_add=True,
+        verbose_name="Дата и время создания"
+    )
+    updated_at = models.DateTimeField(
+        auto_now=True,
+        verbose_name="Дата и время обновления"
+    )
