@@ -64,6 +64,10 @@ class ProfileView(UserPassesTestMixin, DetailView):
     template_name = 'user_detail.html'
     context_object_name = 'user_obj'
 
+    def get_context_data(self, **kwargs):
+        kwargs["user_change_form"] = UserChangeForm(instance=self.request.user)
+        return super().get_context_data(**kwargs)
+
     def test_func(self):
         return self.get_object() == self.request.user
 
@@ -71,55 +75,42 @@ class ProfileView(UserPassesTestMixin, DetailView):
 class UserChangeView(UserPassesTestMixin, UpdateView):
     model = get_user_model()
     form_class = UserChangeForm
-    template_name = 'user_change.html'
     context_object_name = 'user_obj'
 
     def get_success_url(self):
-        return reverse('profile', kwargs={'pk': self.object.pk})
+        return self.request.META.get("HTTP_REFERER")
 
     def test_func(self):
         return self.get_object() == self.request.user
 
 
 # class UserChangeView(View):
-#     form_class = UserChangeForm
-
-#     def get(self, request, pk, *args, **kwargs):
-#         if request.headers.get('x-requested-with') == 'XMLHttpRequest':
-#             user = get_user_model().objects.get(pk=pk)
-#             user.save()
-#             return JsonResponse({'message': 'success'})
-#         return JsonResponse({"message": "Wrong request"})
-
-#     def post(self, request, pk, *args, **kwargs):
-#         if request.request.headers.get('x-requested-with') == 'XMLHttpRequest':
-#             user = get_user_model().objects.get(pk=pk)
-#             data = {
-#                 "first_name": user.first_name,
-#                 "last_name": user.last_name,
-#                 "email": user.email,
-#                 "avtar": user.avatar,
-#                 "phone": user.phone
-#             }
-#             form = self.form_class(request.POST, initial=data)
-#             if form.is_valid():
-#                 first_name = form.cleaned_data['first_name']
-#                 last_name = form.cleaned_data['last_name']
-#                 email = form.cleaned_data['email']
-#                 avatar = form.cleaned_data['avatar']
-#                 phone = form.cleaned_data['phone']
-
-#                 if form.has_changed():
-#                     user.first_name = first_name
-#                     user.last_name = last_name
-#                     user.email = email
-#                     user.avatar = avatar
-#                     user.phone = phone
-#                     user.save()
-#                     return JsonResponse({'message': 'success'})
-
-#                 return JsonResponse({'message': 'Data is not edited'})
-
-#             return JsonResponse({"message": "Validation failed"})
-
-#         return JsonResponse({"message": "Wrong request"})
+#     def get(self, request):
+#         id1 = request.GET.get('id', None)
+#         avatar1 = request.GET.get('avatar', None)
+#         first_name1 = request.GET.get('first_name', None)
+#         last_name1 = request.GET.get('last_name', None)
+#         email1 = request.GET.get('email', None)
+#         phone1 = request.GET.get('phone', None)
+#
+#         obj = get_user_model().objects.get(id=id)
+#         obj.avatar = avatar1
+#         obj.first_name = first_name1
+#         obj.last_name = last_name1
+#         obj.email = email1
+#         obj.phone = phone1
+#         obj.save()
+#
+#         user = {
+#             'id': obj.id,
+#             'avatar': obj.avatar,
+#             'first_name': obj.first_name,
+#             'last_name': obj.last_name,
+#             'email': obj.email,
+#             'phone': obj.phone
+#         }
+#
+#         data = {
+#             'user': user
+#         }
+#         return JsonResponse(data)
