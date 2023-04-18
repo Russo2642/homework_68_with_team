@@ -17,9 +17,15 @@
     </div>
     <div>
         <h4>Желаемый уровень дохода</h4>
+        {% if cv.salary %}
         <ul>
             <li>{{ cv.salary }} тенге</li>
         </ul>
+        {% else %}
+        <ul>
+            <li>Не указано</li>
+        </ul>
+        {% endif %}
     </div>
     <div>
         <h4>Электронная почта</h4>
