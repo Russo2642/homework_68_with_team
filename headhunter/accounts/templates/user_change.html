@@ -4,27 +4,21 @@
 {% bootstrap_css %}
 {% bootstrap_javascript %}
 {% bootstrap_messages %}
-{% load django_bootstrap5 %}
-
 {% block content %}
-<script src="https://code.jquery.com/jquery-3.6.1.js" integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI="crossorigin="anonymous"></script>
-<form method="post" action="{% url 'change' user_obj.pk %}" class="js-book-update-form" enctype="multipart/form-data">
-  {% csrf_token %}
-  <div class="modal-header">
-    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-      <span aria-hidden="true">&times;</span>
-    </button>
-    <h4 class="modal-title">Update book</h4>
-  </div>
-  <div class="modal-body">
-    {% bootstrap_form form %}
-  </div>
-  <div class="modal-footer">
-    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-    <button type="submit" class="btn btn-primary">Update book</button>
-  </div>
-</form>
-
-<script src="{% static 'js/update_user.js' %}"></script>
-
+<main class="cv">
+    <div class="container">
+        <div class="cv-wrapper">
+            <form action="{% url 'change' user_obj.pk %}" method="post"> {% csrf_token %}
+                <span>{% bootstrap_field form.avatar placeholder="" %}</span>
+                <span>{% bootstrap_field form.first_name placeholder="" %}</span>
+                {% if form.last_name %}
+                  <span>{% bootstrap_field form.last_name placeholder="" %}</span>
+                {% endif %}
+                <span>{% bootstrap_field form.email placeholder="" %}</span>
+                <span>{% bootstrap_field form.phone placeholder="" %}</span>
+                {% bootstrap_button button_type="submit" content="Обновить" %}
+            </form>
+        </div>
+    </div>
+</main>
 {% endblock %}

@@ -8,6 +8,7 @@ from django.http import JsonResponse
 from django.shortcuts import redirect, get_object_or_404
 from django.template.loader import render_to_string
 from django.urls import reverse
+from django.views import View
 from django.views.generic import TemplateView, CreateView, DetailView, UpdateView
 
 
@@ -78,3 +79,47 @@ class UserChangeView(UserPassesTestMixin, UpdateView):
 
     def test_func(self):
         return self.get_object() == self.request.user
+
+
+# class UserChangeView(View):
+#     form_class = UserChangeForm
+
+#     def get(self, request, pk, *args, **kwargs):
+#         if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+#             user = get_user_model().objects.get(pk=pk)
+#             user.save()
+#             return JsonResponse({'message': 'success'})
+#         return JsonResponse({"message": "Wrong request"})
+
+#     def post(self, request, pk, *args, **kwargs):
+#         if request.request.headers.get('x-requested-with') == 'XMLHttpRequest':
+#             user = get_user_model().objects.get(pk=pk)
+#             data = {
+#                 "first_name": user.first_name,
+#                 "last_name": user.last_name,
+#                 "email": user.email,
+#                 "avtar": user.avatar,
+#                 "phone": user.phone
+#             }
+#             form = self.form_class(request.POST, initial=data)
+#             if form.is_valid():
+#                 first_name = form.cleaned_data['first_name']
+#                 last_name = form.cleaned_data['last_name']
+#                 email = form.cleaned_data['email']
+#                 avatar = form.cleaned_data['avatar']
+#                 phone = form.cleaned_data['phone']
+
+#                 if form.has_changed():
+#                     user.first_name = first_name
+#                     user.last_name = last_name
+#                     user.email = email
+#                     user.avatar = avatar
+#                     user.phone = phone
+#                     user.save()
+#                     return JsonResponse({'message': 'success'})
+
+#                 return JsonResponse({'message': 'Data is not edited'})
+
+#             return JsonResponse({"message": "Validation failed"})
+
+#         return JsonResponse({"message": "Wrong request"})
