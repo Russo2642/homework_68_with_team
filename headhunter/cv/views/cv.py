@@ -67,3 +67,14 @@ class UpdateButtonView(View):
         cv = get_object_or_404(CV, pk=pk)
         cv.save()
         return redirect(request.META.get('HTTP_REFERER', '/'))
+
+
+class IsPublishedView(View):
+    def post(self, request, pk):
+        cv = get_object_or_404(CV, pk=pk)
+        if cv.is_published:
+            cv.is_published = False
+        else:
+            cv.is_published = True
+        cv.save()
+        return redirect(request.META.get('HTTP_REFERER', '/'))
