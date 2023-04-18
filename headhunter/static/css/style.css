@@ -135,6 +135,67 @@ tr:nth-child(even) {
     border: 1px solid #75aeca;
 }
 
+.index {
+    max-width: 1000px;
+    margin: 50px auto;
+    box-shadow: 0px 0px 10px -5px black;
+    padding: 50px;
+    border-radius: 20px;
+}
+.index-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.index-top h3 {
+    font-size: 28px;
+}
+.index-top button {
+    width: 150px;
+    height: 45px;
+    font-weight: bold;
+    background: rgba(128, 128, 128, 0.125);
+    border-color: rgba(128, 128, 128, 0.125);
+}
+.index-status {
+    display: flex;
+    gap: 40px;
+    background: rgba(128, 128, 128, 0.125);
+    padding: 15px 30px;
+    margin-top: 25px;
+    color: gray;
+}
+.index-stats-button {
+    text-decoration: underline;
+    border: none;
+    background: transparent;
+    color: rgb(31, 192, 246);
+}
+
+.index-card {
+    padding: 25px;
+    box-shadow: 0px 0px 10px -5px black;
+    margin-top: 20px;
+}
+.index-card h3 {
+    font-size: 24px;
+    color: rgb(31, 192, 246);
+    margin-bottom: 10px;
+}
+.index-card > p {
+    color: gray;
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+.index-card > button {
+    width: 150px;
+    height: 35px;
+    background: rgb(65, 65, 252);
+    border: none;
+    color: #fff;
+    font-weight: bold;
+}
+
 @media (max-width: 768px) {
     header > .container {
         padding-left: 1em;

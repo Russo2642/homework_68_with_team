@@ -58,10 +58,13 @@ class RegisterView(CreateView):
         return self.render_to_response(context)
 
 
-class ProfileView(LoginRequiredMixin, DetailView):
+class ProfileView(UserPassesTestMixin, DetailView):
     model = get_user_model()
     template_name = 'user_detail.html'
     context_object_name = 'user_obj'
+
+    def test_func(self):
+        return self.get_object() == self.request.user
 
 
 class UserChangeView(UserPassesTestMixin, UpdateView):

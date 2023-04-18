@@ -43,34 +43,41 @@
         Редактировать профиль</a>
     {% endif %}
 </div>
-<div class="create-cv">
-    {% if user_obj == request.user %}
-    <button><a href="{% url 'cv_create' %}" style="text-decoration:None; color:black;">Создать резюме</a></button>
-    {% endif %}
-</div>
 
-<div class="row">
+<main class="index">
+    <div class="index-top">
+        <h3>Мои резюме</h3>
+        {% if user_obj == request.user %}
+        <button><a href="{% url 'cv_create' %}" class="create-res" style="text-decoration:none; color:black;">Создать
+            резюме</a></button>
+        {% endif %}
+    </div>
     {% for cv in user_obj.cv.all %}
-    <div class="notes">
-        <h2>{{ cv.title }}</h2>
-        <p>Обновлено: {{ cv.updated_at }}</p>
-        <p>
-            <a href="{% url 'cv_detail' cv.pk %}" class="btn btn-primary read_more">Посмотреть резюме</a>
-        <form action="{% url 'update_button' cv.pk %}" method="post"> {% csrf_token %}
-            <button class="btn btn-success" type="submit">Обновить</button>
-        </form>
-        <form action="{% url 'publishing' cv.pk %}" method="post"> {% csrf_token %}
+    <div class="index-status">
+        <span>
+            <form action="{% url 'publishing' cv.pk %}" method="post"> {% csrf_token %}
             {% if cv.is_published %}
-            <button class="btn btn-success" type="submit">Снять с публикации</button>
+            <button class="index-stats-button" type="submit">Снять с публикации</button>
             {% else %}
-            <button class="btn btn-success" type="submit">Опубликовать</button>
+            <button class="index-stats-button" type="submit">Опубликовать</button>
             {% endif %}
         </form>
-        </p>
+        </span>
+        <a href="{% url 'cv_detail' cv.pk %}">Посмотреть резюме</a>
+    </div>
+    <div class="index-card">
+        <h3>{{ cv.title }}</h3>
+        <p>Обновлено <span>{{ cv.updated_at }}</span></p>
+        <div class="index-stats">
+            <form action="{% url 'update_button' cv.pk %}" method="post"> {% csrf_token %}
+                <button class="index-stats-button" type="submit">Поднять в поиске</button>
+            </form>
+        </div>
     </div>
     {% empty %}
     <h1><p>CVs not found</p></h1>
     {% endfor %}
-</div>
+</main>
+
 
 {% endblock %}
