@@ -1,15 +1,31 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-    <h1>New Cv</h1>
-    <div class="form">
-        <form action="{% url 'cv_create' %}" method="post">
-            {% include 'partial/cv_form.html' with button_text='Создать' %}
-        </form>
+{% extends 'base/base.html' %}
+{% load static %}
+{% load django_bootstrap5 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+{% bootstrap_messages %}
+{% block content %}
+<main class="cv">
+    <div class="container">
+        <div class="cv-wrapper">
+            <form action="{% url 'cv_create' %}" method="post"> {% csrf_token %}
+                <span>{% bootstrap_field form.title placeholder="" %}</span>
+                <span>{% bootstrap_field form.category placeholder="" %}</span>
+                <span>{% bootstrap_field form.email placeholder="" %}</span>
+                <span>{% bootstrap_field form.phone placeholder="" %}</span>
+                <span>{% bootstrap_field form.date_birth placeholder="" %}</span>
+                <span>{% bootstrap_field form.sex placeholder="" %}</span>
+                <span>{% bootstrap_field form.marital_status placeholder="" %}</span>
+                <span>{% bootstrap_field form.address1 placeholder="" %}</span>
+                <span>{% bootstrap_field form.address2 placeholder="" %}</span>
+                <span>{% bootstrap_field form.city placeholder="" %}</span>
+                <span>{% bootstrap_field form.telegram placeholder="" %}</span>
+                <span>{% bootstrap_field form.whatsapp placeholder="" %}</span>
+                <span>{% bootstrap_field form.linkedin placeholder="" %}</span>
+                <span>{% bootstrap_field form.facebook placeholder="" %}</span>
+                {% bootstrap_button button_type="submit" content="Дальше" %}
+            </form>
+        </div>
     </div>
-</body>
-</html>
+</main>
+{% endblock %}

@@ -2,7 +2,7 @@ from django import forms
 
 from cv.models import CV
 
-from cv.models.cv import JobExperience
+from cv.models import JobExperience
 
 
 class CVForm(forms.ModelForm):
@@ -42,6 +42,14 @@ class CVForm(forms.ModelForm):
             'linkedin': 'LinkedIn(ссылка)',
             'facebook': 'Facebook(ссылка)'
         }
+        widgets = {
+            'date_birth': forms.DateInput(
+                format=('%Y-%m-%d'),
+                attrs={'class': 'form-control',
+                       'placeholder': 'Select a date',
+                       'type': 'date'
+                       }),
+        }
 
 
 class JobExpForm(forms.ModelForm):
@@ -55,7 +63,7 @@ class JobExpForm(forms.ModelForm):
         )
         labels = {
             'job_place': 'Место работы',
-            'job_exp': 'Стаж',
+            'job_exp': 'Стаж (лет)',
             'job_position': 'Должность',
             'job_description': 'Обязанности'
         }
