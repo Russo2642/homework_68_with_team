@@ -134,6 +134,14 @@ class CV(models.Model):
         blank=False,
         default=False
     )
+    created_at = models.DateTimeField(
+        auto_now_add=True,
+        verbose_name="Дата и время создания"
+    )
+    updated_at = models.DateTimeField(
+        auto_now=True,
+        verbose_name="Дата и время обновления"
+    )
 
     def __str__(self):
         return f"{self.user} - {self.title} - {self.category}"

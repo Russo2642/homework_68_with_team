@@ -4,7 +4,7 @@ from cv.models.cv import CV
 from cv.models import JobExperience
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse
-from django.views.generic import DetailView, CreateView
+from django.views.generic import DetailView, CreateView, UpdateView
 
 
 class CVCreateView(CreateView):
@@ -26,6 +26,15 @@ class CVDetailView(DetailView):
     context_object_name = 'cv'
 
 
+class CVUpdateView(UpdateView):
+    template_name = 'cv/cv_update.html'
+    model = CV
+    form_class = CVForm
+
+    def get_success_url(self):
+        return reverse('cv_detail', kwargs={'pk': self.object.pk})
+
+
 class JobExpCreateView(CreateView):
     template_name = 'cv/job_create.html'
     model = JobExperience
@@ -41,3 +50,12 @@ class JobExpCreateView(CreateView):
     def get_success_url(self):
         return reverse('profile', kwargs={'pk': self.request.user.pk})
 
+
+class JobExpUpdateView(UpdateView):
+    template_name = 'cv/job_update.html'
+    model = JobExperience
+    form_class = JobExpForm
+    context_object_name = 'job_exp'
+
+    def get_success_url(self):
+        return reverse('cv_detail', kwargs={'pk': self.object.cv_id})

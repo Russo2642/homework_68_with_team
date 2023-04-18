@@ -3,20 +3,29 @@
 
 
 {% block content %}
-    <div class="login-form">
-        <form method="post">
-            <div class="login">
-                {% csrf_token %}
-                {% bootstrap_form form %}
-                {% bootstrap_button button_type="submit" content='Войти' %}
+<div class="login-form">
+    <div class="row mt-5">
+        <div class="d-flex justify-content-center">
+            <div class="col-lg-4 col-md-8 col-sm-11">
+                <div class="card">
+                    <div class="card-body">
+                        <form method="post">
+                            {% csrf_token %}
+                            {% bootstrap_field form.username placeholder="" %}
+                            {% bootstrap_field form.password placeholder="" %}
+                            {% bootstrap_button button_type="submit" content='Войти' %}
+                        </form>
+                    </div>
+                </div>
             </div>
-        </form>
+        </div>
     </div>
-    <div class="login-register-form">
-        <p style="font-size:14px; text-align:center">У вас нет аккаунта?
-            <a href="{% url 'register' %}">Зарегестрироваться</a>
-        </p>
-    </div>
+</div>
+<div class="login-register-form">
+    <p style="font-size:14px; text-align:center">У вас нет аккаунта?
+        <a href="{% url 'register' %}">Зарегестрироваться</a>
+    </p>
+</div>
 
 
 {% endblock %}
