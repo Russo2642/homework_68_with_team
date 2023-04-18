@@ -20,6 +20,10 @@ class CustomUserCreationForm(forms.ModelForm):
         required=True,
         widget=forms.PasswordInput
     )
+    phone = forms.RegexField(
+        regex=r'[^\+?1?\d{9,15}$]',
+        error_messages=({'invalid': 'Введите номер телефона в формате +77771234567. Максимум 15 цифр.'}),
+    )
 
     class Meta:
         model = get_user_model()
