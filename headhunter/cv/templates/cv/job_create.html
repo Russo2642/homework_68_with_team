@@ -1,15 +1,21 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-    <h1>New Cv</h1>
-    <div class="form">
-        <form action="" method="post">
-            {% include 'partial/cv_form.html' with button_text='Создать' %}
-        </form>
+{% extends 'base/base.html' %}
+{% load static %}
+{% load django_bootstrap5 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+{% bootstrap_messages %}
+{% block content %}
+<main class="cv">
+    <div class="container">
+        <div class="cv-wrapper">
+            <form action="" method="post"> {% csrf_token %}
+                <span>{% bootstrap_field form.job_place placeholder="" %}</span>
+                <span>{% bootstrap_field form.job_exp placeholder="" %}</span>
+                <span>{% bootstrap_field form.job_position placeholder="" %}</span>
+                <span>{% bootstrap_field form.job_description placeholder="" %}</span>
+                {% bootstrap_button button_type="submit" content="Создать" %}
+            </form>
+        </div>
     </div>
-</body>
-</html>
+</main>
+{% endblock %}

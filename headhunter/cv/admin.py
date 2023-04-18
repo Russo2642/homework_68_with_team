@@ -2,7 +2,7 @@ from django.contrib import admin
 
 from cv.models import CV
 
-from cv.models.cv import JobExperience
+from cv.models import JobExperience
 
 
 class CVAdmin(admin.ModelAdmin):

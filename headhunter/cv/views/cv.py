@@ -1,7 +1,7 @@
 from cv.forms import CVForm
 from cv.forms import JobExpForm
 from cv.models.cv import CV
-from cv.models.cv import JobExperience
+from cv.models import JobExperience
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse
 from django.views.generic import DetailView, CreateView

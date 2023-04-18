@@ -1,8 +1,20 @@
+{% extends 'base/base.html' %}
+{% load django_bootstrap5 %}
+{% block menu %}
+{% if user_obj == request.user %}
+<form action="{% url 'logout' %}" method="post">
+    {% csrf_token %}
+    <input style="width:100px" type="submit" class="btn btn-danger" value="Выйти">
+</form>
+{% endif %}
+{% endblock %}
+{% block content %}
+
 {% if user_obj.avatar %}
 <img class="avatar" src="{{ user_obj.avatar.url }}" alt="user picture">
 {% else %}
 <img style="width:100px; height:100px"
-     src="https://abrakadabra.fun/uploads/posts/2021-12/thumbs/1640528649_39-abrakadabra-fun-p-serii-chelovek-na-avu-44.jpg"
+     src="../../../uploads/user_pic/default.jpg"
      alt="user picture">
 {% endif %}
 
@@ -16,3 +28,8 @@
 <button><a href="{% url 'change' user_obj.pk %}" style="text-decoration:None; color:black;">Редактировать
     профиль</a></button>
 {% endif %}
+
+{% if user_obj == request.user %}
+<button><a href="{% url 'cv_create' %}" style="text-decoration:None; color:black;">Создать резюме</a></button>
+{% endif %}
+{% endblock %}

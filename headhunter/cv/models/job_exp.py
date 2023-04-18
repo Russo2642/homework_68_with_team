@@ -1,6 +1,6 @@
 from django.db import models
 
-from headhunter.cv.models import CV
+from cv.models import CV
 
 
 class JobExperience(models.Model):
