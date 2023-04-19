@@ -3,12 +3,8 @@ from accounts.forms import LoginForm
 from accounts.forms import UserChangeForm
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout, get_user_model
-from django.contrib.auth.mixins import UserPassesTestMixin, LoginRequiredMixin
-from django.http import JsonResponse
-from django.shortcuts import redirect, get_object_or_404
-from django.template.loader import render_to_string
-from django.urls import reverse
-from django.views import View
+from django.contrib.auth.mixins import UserPassesTestMixin
+from django.shortcuts import redirect
 from django.views.generic import TemplateView, CreateView, DetailView, UpdateView
 
 
@@ -82,35 +78,3 @@ class UserChangeView(UserPassesTestMixin, UpdateView):
 
     def test_func(self):
         return self.get_object() == self.request.user
-
-
-# class UserChangeView(View):
-#     def get(self, request):
-#         id1 = request.GET.get('id', None)
-#         avatar1 = request.GET.get('avatar', None)
-#         first_name1 = request.GET.get('first_name', None)
-#         last_name1 = request.GET.get('last_name', None)
-#         email1 = request.GET.get('email', None)
-#         phone1 = request.GET.get('phone', None)
-#
-#         obj = get_user_model().objects.get(id=id)
-#         obj.avatar = avatar1
-#         obj.first_name = first_name1
-#         obj.last_name = last_name1
-#         obj.email = email1
-#         obj.phone = phone1
-#         obj.save()
-#
-#         user = {
-#             'id': obj.id,
-#             'avatar': obj.avatar,
-#             'first_name': obj.first_name,
-#             'last_name': obj.last_name,
-#             'email': obj.email,
-#             'phone': obj.phone
-#         }
-#
-#         data = {
-#             'user': user
-#         }
-#         return JsonResponse(data)

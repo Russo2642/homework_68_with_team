@@ -18,9 +18,9 @@
         <tr>
             <td>
                 {% if user_obj.avatar %}
-                <img class="avatar" src="{{ user_obj.avatar.url }}" alt="user picture">
+                <img style="width:150px; height:150px" class="avatar" src="{{ user_obj.avatar.url }}" alt="user picture">
                 {% else %}
-                <img class="avatar" style="width:100px; height:100px"
+                <img class="avatar" style="width:150px; height:150px"
                      src="../../../uploads/user_pic/default.jpg"
                      alt="user picture">
                 {% endif %}
@@ -90,7 +90,7 @@
         </div>
     </div>
     {% empty %}
-    <h1><p>CVs not found</p></h1>
+    <h1><p>Резюме не найдены</p></h1>
     {% endfor %}
 </main>
 
