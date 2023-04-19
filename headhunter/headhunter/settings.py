@@ -40,7 +40,8 @@ INSTALLED_APPS = [
     'django_bootstrap5',
     'fontawesomefree',
     'accounts',
-    'cv'
+    'cv',
+    'vacancy',
 ]
 
 MIDDLEWARE = [
@@ -81,10 +82,10 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'hw_68',
-        'USER': 'postgres',
-        'PASSWORD': '414295mini',
+        'USER': 'macbookair',
+        'PASSWORD': '618396',
         'HOST': 'localhost',
-        'PORT': '5433'
+        'PORT': ''
     }
 }
 

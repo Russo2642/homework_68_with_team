@@ -248,3 +248,17 @@ tr:nth-child(even) {
     align-items: center;
 }
 
+.cv_link {
+  text-decoration: none;
+  color: green;
+}
+
+.vac_link {
+  text-decoration: none;
+  color: deepskyblue;
+}
+
+.btn-outline-success{
+    margin: 1rem;
+}
+

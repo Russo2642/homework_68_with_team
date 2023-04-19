@@ -4,9 +4,16 @@
 
 {% block content %}
 {% for cv in cvs %}
-
-<p>{{ cv.title }}</p>
-<p>{{ cv.salary }}</p>
+<div class="card w-75" style="margin-top: 2rem">
+    <div class="card-body">
+        <h4 class="card-title">{{ cv.title }}</h4>
+        <p class="card-text">Статистика за неделю</p>
+        <span><a href="{% url 'cv_detail' user.pk %}">Подробнее</a></span> <span><a href="#">Редактировать</a></span>
+    </div>
+    <div class="card-footer">
+        <small class="text-muted">У вас неплохое резюме! Отправляйте больше откликов на вакансии, чтобы найти работу быстрее</small>
+    </div>
+</div>
 
 {% endfor %}
 {% endblock %}
