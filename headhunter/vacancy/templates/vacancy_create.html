@@ -1,0 +1,14 @@
+{% extends 'base/base.html' %}
+{% load django_bootstrap5 %}
+{% block title%}
+    Create Vacancy
+{% endblock %}
+{% block content %}
+<div class="container">
+    <form action="{% url 'vacancy_create' %}" method="POST">
+        {% csrf_token %}
+        {% bootstrap_form form %}
+        <button type="submit" class="btn btn-secondary">Создать вакансию</button>
+    </form>
+</div>
+{% endblock %}
