@@ -1,7 +1,6 @@
 from django.shortcuts import redirect
 from django.urls import reverse
 from django.views.generic import DetailView, CreateView
-
 from vacancy.forms import VacancyForm
 from vacancy.models import Vacancy
 
@@ -16,7 +15,7 @@ class VacancyCreateView(CreateView):
         if form.is_valid():
             form.instance.author = request.user
             form.save()
-            return redirect('vacancy_detail', pk=request.user.pk)
+            return redirect('vacancy_detail', pk=form.instance.pk)
         context = {}
         context['form'] = form
         return self.render_to_response(context)
@@ -29,3 +28,9 @@ class VacancyDetailView(DetailView):
     template_name = 'vacancy_detail.html'
     model = Vacancy
     context_object_name = 'vacancy'
+
+    def get_object(self, queryset=None):
+        try:
+            return Vacancy.objects.get(pk=self.kwargs['pk'])
+        except Vacancy.DoesNotExist:
+            return redirect('index')

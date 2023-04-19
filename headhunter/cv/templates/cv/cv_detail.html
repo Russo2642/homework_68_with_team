@@ -4,152 +4,68 @@
 {% bootstrap_css %}
 {% bootstrap_javascript %}
 {% bootstrap_messages %}
+
 {% block content %}
 
-<h1>{{ cv.title }}</h1>
+<div class="container" style="margin-top: 2rem">
+    <div class="row">
+        <div class="col-md-8">
+            <h3>{{ cv.title }}</h3>
+            <hr>
+            <ul>
+                <li>Направление: {{ cv.get_category_display }}</li>
+                <li>Желаемый уровень дохода: {% if cv.salary %}{{ cv.salary }} тенге{% else %}Не указано{% endif %}</li>
+                <li>Электронная почта: {{ cv.email }}</li>
+                <li>Номер телефона: {{ cv.phone }}</li>
+                <li>Дата рождения: {{ cv.date_birth }}</li>
+                <li>Пол: {{ cv.get_sex_display }}</li>
+                <li>Семейное положение: {{ cv.get_marital_status_display }}</li>
+                <li>Адрес 1: {% if cv.address1 %}{{ cv.address1 }}{% else %}Не указано{% endif %}</li>
+                <li>Адрес 2: {% if cv.address2 %}{{ cv.address2 }}{% else %}Не указано{% endif %}</li>
+                <li>Город проживания: {{ cv.get_city_display }}</li>
+            </ul>
+            {% if request.user == cv.author %}
+            <p><a href="{% url 'cv_update' cv.pk %}" class="btn btn-outline-dark">Редактировать личные данные</a></p>
+            {% endif %}
+            <hr>
+            <h3>Опыт работы</h3>
+            {% for job in cv.job_exp.all %}
+            <h4>{{ job.job_place }}</h4>
+            <p>Должность: {{ job.job_position }}</p>
+            <p>Стаж: {% if job.job_exp == 1 %}{{ job.job_exp }} год{% elif job.job_exp > 1 and job.job_exp <= 4.5 %}{{
+                job.job_exp }} года{% else %}{{ job.job_exp }} лет{% endif %}</p>
+            <p>Обязанности:</p>
+            <p>{{ job.job_description }}</p>
+            {% if request.user == cv.author %}
+            <p><a href="{% url 'job_update' job.pk %}" class="btn btn-outline-dark">Редактировать опыт работы</a></p>
+            {% endif %}
+            <hr>
+            {% empty %}
+            <div>
+                <h4>Опыт работы отсутствует</h4>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="col-md-4">
+            <h3>Соц сети</h3>
+            <ul class="list-inline">
+                <li class="list-inline-item"><a href="{{ cv.telegram }}"><i class="fa-brands fa-telegram fa-xl"></i></a>
+                </li>
+                {% if cv.whatsapp %}
+                <li class="list-inline-item"><a href="{{ cv.whatsapp }}"><i class="fa-brands fa-whatsapp fa-xl"></i></a>
+                </li>
+                {% endif %}
+                {% if cv.linkedin %}
+                <li class="list-inline-item"><a href="{{ cv.linkedin }}"><i class="fa-brands fa-linkedin fa-xl"></i></a>
+                </li>
+                {% endif %}
 
-<main class="data">
-    <div>
-        <h4>Направление</h4>
-        <ul>
-            <li>{{ cv.get_category_display }}</li>
-        </ul>
+                {% if cv.facebook %}
+                <li class="list-inline-item"><a href="{{ cv.facebook }}"><i class="fa-brands fa-facebook fa-xl"></i></a>
+                </li>
+                {% endif %}
+            </ul>
+        </div>
     </div>
-    <div>
-        <h4>Желаемый уровень дохода</h4>
-        {% if cv.salary %}
-        <ul>
-            <li>{{ cv.salary }} тенге</li>
-        </ul>
-        {% else %}
-        <ul>
-            <li>Не указано</li>
-        </ul>
-        {% endif %}
-    </div>
-    <div>
-        <h4>Электронная почта</h4>
-        <ul>
-            <li>{{ cv.email }}</li>
-        </ul>
-    </div>
-    <div>
-        <h4>Номер телефона</h4>
-        <ul>
-            <li>{{ cv.phone }}</li>
-        </ul>
-    </div>
-    <div>
-        <h4>Дата рождения</h4>
-        <ul>
-            <li>{{ cv.date_birth }}</li>
-        </ul>
-    </div>
-    <div>
-        <h4>Пол</h4>
-        <ul>
-            <li>{{ cv.get_sex_display }}</li>
-        </ul>
-    </div>
-    <div>
-        <h4>Семейное положение</h4>
-        <ul>
-            <li>{{ cv.get_marital_status_display }}</li>
-        </ul>
-    </div>
-    <div>
-        <h4>Адрес 1</h4>
-        {% if cv.address1 %}
-        <ul>
-            <li>{{ cv.address1 }}</li>
-        </ul>
-        {% else %}
-        <ul>
-            <li>Не указано</li>
-        </ul>
-        {% endif %}
-    </div>
-    <div>
-        <h4>Адрес 2</h4>
-        {% if cv.address2 %}
-        <ul>
-            <li>{{ cv.address2 }}</li>
-        </ul>
-        {% else %}
-        <ul>
-            <li>Не указано</li>
-        </ul>
-        {% endif %}
-    </div>
-    <div>
-        <h4>Город проживания</h4>
-        <ul>
-            <li>{{ cv.get_city_display }}</li>
-        </ul>
-    </div>
-    <div class="social-network">
-        <h4>Соц сети</h4>
-        <a style="width:15px;" href="{{ cv.telegram }}"><i class="fa-brands fa-telegram fa-xl"></i></a>
-        {% if cv.whatsapp %}
-            <a style="width:15px;" href="{{ cv.whatsapp }}"><i class="fa-brands fa-whatsapp fa-xl"></i></a>
-        {% endif %}
-
-        {% if cv.linkedin %}
-            <a style="width:15px;" href="{{ cv.linkedin }}"><i class="fa-brands fa-linkedin fa-xl"></i></a>
-        {% endif %}
-
-        {% if cv.facebook %}
-            <a style="width:15px;" href="{{ cv.facebook }}"><i class="fa-brands fa-facebook fa-xl"></i></a>
-        {% endif %}
-    </div>
-    <br>
-    <p><a href="{% url 'cv_update' cv.pk %}" class="btn btn-outline-dark">Редактировать личные данные</a></p>
-    <br>
-
-    <br>
-    <h1>Опыт работы</h1>
-    <br>
-    {% for job in cv.job_exp.all %}
-    <div>
-        <h4>Название компании</h4>
-        <ul>
-            <li>{{ job.job_place }}</li>
-        </ul>
-    </div>
-    <div>
-        <h4>Стаж</h4>
-        {% if job.job_exp == 1 %}
-        <ul>
-            <li>{{ job.job_exp }} год</li>
-        </ul>
-        {% elif job.job_exp > 1 and job.job_exp <= 4.5 %}
-        <ul>
-            <li>{{ job.job_exp }} года</li>
-        </ul>
-        {% else %}
-        <ul>
-            <li>{{ job.job_exp }} лет</li>
-        </ul>
-        {% endif %}
-    </div>
-    <div>
-        <h4>Должность</h4>
-        <ul>
-            <li>{{ job.job_position }}</li>
-        </ul>
-    </div>
-    <div>
-        <h4>Обязанности</h4>
-        <p>{{ job.job_description }}</p>
-    </div>
-    <br>
-    <p><a href="{% url 'job_update' job.pk %}" class="btn btn-outline-dark">Редактировать опыт работы</a></p>
-    {% empty %}
-    <div>
-        <h4>Опыт работы отсутствует</h4>
-    </div>
-    {% endfor %}
-</main>
-
-
+</div>
 {% endblock %}

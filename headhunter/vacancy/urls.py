@@ -1,5 +1,4 @@
 from django.urls import path
-
 from vacancy.views.vacancy import VacancyCreateView, VacancyDetailView
 
 urlpatterns = [

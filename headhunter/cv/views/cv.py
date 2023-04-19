@@ -2,7 +2,7 @@ from cv.forms import CVForm
 from cv.forms import JobExpForm
 from cv.models.cv import CV
 from cv.models import JobExperience
-from django.contrib.auth.mixins import UserPassesTestMixin
+from django.contrib.auth.mixins import UserPassesTestMixin, LoginRequiredMixin
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse, reverse_lazy
 from django.views import View
@@ -89,3 +89,12 @@ class IsPublishedView(View):
             cv.is_published = True
         cv.save()
         return redirect(request.META.get('HTTP_REFERER', '/'))
+
+
+class CVListView(LoginRequiredMixin, View):
+    def get(self, request):
+        cv = CV.objects.all()
+        context = {
+            'cvs': cv,
+        }
+        return render(request, 'cv/cv_list.html', context=context)

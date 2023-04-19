@@ -30,7 +30,7 @@
             <ul class="navbar-nav me-auto">
                 {% if user.is_authenticated %}
                 <li class="nav-item">
-                    <a class="nav-link active" href="#">Мои резюме</a>
+                    <a class="nav-link active" href="{% url 'my_cv' %}">Мои резюме</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link active" href="#">Отклики</a>

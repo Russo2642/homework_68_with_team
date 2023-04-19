@@ -4,21 +4,34 @@
 {% bootstrap_css %}
 {% bootstrap_javascript %}
 {% bootstrap_messages %}
-{% block title %} Profile {% endblock %}
+{% block title %}Vacancy Detail{% endblock %}
 {% block content %}
-    <div class="container">
-        <h2>{{ vacancy.title }}</h2>
-        <h4>{{ vacancy.get_profession_display }}</h4>
-        <h2>Основные обязанности: </h2>
-        <p>{{ vacancy.description }}</p>
+<div class="container mt-5">
 
-        <h2> {{ vacancy.salary }} тг </h2>
-        <p>Требования к должности.</p>
-        <ul>
-            <li>Опыт работы от {{ vacancy.exp_from }} - {{ vacancy.exp_before }}
-                лет
-            </li>
-            <li>Дата обновления {{ vacancy.updated_at }}</li>
-        </ul>
-    </div>
+        <div class="col-md-10">
+            <div class="card">
+                <div class="card-header">
+                    <h2>{{ vacancy.title }}</h2>
+                    <h5 class="text-muted">{{ vacancy.get_profession_display }}</h5>
+                </div>
+                <div class="card-body">
+                    <h4 class="card-title">Основные обязанности:</h4>
+                    <p class="card-text">{{ vacancy.description }}</p>
+
+                    <h4 class="card-title">Зарплата:</h4>
+                    <h2>{{ vacancy.salary }} тг</h2>
+
+                    <h4 class="card-title">Требования к должности:</h4>
+                    <ul>
+                        <li>Опыт работы от {{ vacancy.exp_from }} до {{ vacancy.exp_before }} лет</li>
+                        <li>Дата обновления {{ vacancy.updated_at }}</li>
+                    </ul>
+                </div>
+                <div class="card-footer text-muted">
+                    Автор вакансии: {{ vacancy.author }}
+                </div>
+            </div>
+        </div>
+
+</div>
 {% endblock %}
