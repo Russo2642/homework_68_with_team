@@ -74,6 +74,11 @@
         </form>
         </span>
         <a href="{% url 'cv_detail' cv.pk %}">Посмотреть резюме</a>
+        {% if user_obj == request.user %}
+           <button style="color:red;" type="button" class="btn btn-outline-red"
+                   data-bs-toggle="modal" data-bs-target="#ModalDeleteCV">Удалить резюме</button>
+            {% include 'partial/cv_confirm_delete.html' %}
+        {% endif %}
     </div>
     <div class="index-card">
         <h3>{{ cv.title }}</h3>

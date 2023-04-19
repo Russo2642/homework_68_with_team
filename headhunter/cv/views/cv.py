@@ -4,9 +4,9 @@ from cv.models.cv import CV
 from cv.models import JobExperience
 from django.contrib.auth.mixins import UserPassesTestMixin
 from django.shortcuts import render, get_object_or_404, redirect
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 from django.views import View
-from django.views.generic import DetailView, CreateView, UpdateView
+from django.views.generic import DetailView, CreateView, UpdateView, DeleteView
 
 
 class CVCreateView(CreateView):
@@ -35,6 +35,16 @@ class CVUpdateView(UpdateView):
 
     def get_success_url(self):
         return reverse('cv_detail', kwargs={'pk': self.object.pk})
+
+
+class CVDeleteView(UserPassesTestMixin, DeleteView):
+    model = CV
+
+    def get_success_url(self):
+        return reverse_lazy('profile', kwargs={'pk': self.object.user_id})
+
+    def test_func(self):
+        return self.get_object().user == self.request.user
 
 
 class JobExpCreateView(CreateView):
