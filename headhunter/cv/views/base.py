@@ -1,4 +1,5 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.paginator import Paginator
 from django.db.models import Q
 from django.shortcuts import render
 from django.views import View
@@ -30,6 +31,10 @@ class IndexView(LoginRequiredMixin, View):
                 Q(author__first_name__icontains=search, author__is_employer=True) |
                 Q(profession__in=[item[0] for item in CategoryChoice.choices if search.lower() in item[1].lower()])
             )
+
+        paginator = Paginator(vacancies, 5)
+        page = request.GET.get('page')
+        vacancies = paginator.get_page(page)
 
         context = {
             'vacancies': vacancies,
