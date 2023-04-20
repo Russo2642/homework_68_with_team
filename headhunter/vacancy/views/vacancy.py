@@ -1,6 +1,6 @@
 from django.shortcuts import redirect
 from django.urls import reverse
-from django.views.generic import DetailView, CreateView
+from django.views.generic import DetailView, CreateView, UpdateView
 from vacancy.forms import VacancyForm
 from vacancy.models import Vacancy
 
@@ -34,3 +34,13 @@ class VacancyDetailView(DetailView):
             return Vacancy.objects.get(pk=self.kwargs['pk'])
         except Vacancy.DoesNotExist:
             return redirect('index')
+
+
+class VacancyUpdateView(UpdateView):
+    template_name = 'vacancy_update.html'
+    form_class = VacancyForm
+    model = Vacancy
+    context_object_name = 'vacancy'
+
+    def get_success_url(self):
+        return reverse('vacancy_detail', kwargs={'pk': self.object.pk})
