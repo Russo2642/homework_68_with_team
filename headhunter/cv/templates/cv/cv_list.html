@@ -3,20 +3,18 @@
 
 {% block content %}
 {% for cv in cvs %}
-    {% if request.user == cv.author or request.user.is_authenticated and request.user.is_employer %}
-        <div class="card w-75" style="margin-top: 2rem">
-            <div class="card-body">
-                <h4 class="card-title">{{ cv.title }}</h4>
-                <p class="card-text">Статистика за неделю</p>
-                <span><a href="{% url 'cv_detail' cv.pk %}">Подробнее</a></span>
-                {% if request.user == cv.author %}
-                    <span><a href="{% url 'cv_update' cv.pk %}">Редактировать</a></span>
-                {% endif %}
-            </div>
-            <div class="card-footer">
-                <small class="text-muted">У вас неплохое резюме! Отправляйте больше откликов на вакансии, чтобы найти работу быстрее</small>
-            </div>
+    <div class="card w-75" style="margin-top: 2rem">
+        <div class="card-body">
+            <h4 class="card-title">{{ cv.title }}</h4>
+            <p class="card-text">Статистика за неделю</p>
+            <span><a href="{% url 'cv_detail' cv.pk %}">Подробнее</a></span>
+            {% if request.user == cv.user %}
+                <span><a href="{% url 'cv_update' cv.pk %}">Редактировать</a></span>
+            {% endif %}
         </div>
-    {% endif %}
+        <div class="card-footer">
+            <small class="text-muted">У вас неплохое резюме! Отправляйте больше откликов на вакансии, чтобы найти работу быстрее</small>
+        </div>
+    </div>
 {% endfor %}
 {% endblock %}

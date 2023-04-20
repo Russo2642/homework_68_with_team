@@ -7,6 +7,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse, reverse_lazy
 from django.views import View
 from django.views.generic import DetailView, CreateView, UpdateView, DeleteView
+from vacancy.models import Application
 
 
 class CVCreateView(CreateView):
@@ -93,8 +94,16 @@ class IsPublishedView(View):
 
 class CVListView(LoginRequiredMixin, View):
     def get(self, request):
-        cv = CV.objects.all()
+        if request.user.is_employer:
+            applications = Application.objects.filter(vacancy__author=request.user)
+            applicant_ids = [app.applicant.id for app in applications]
+            cvs = CV.objects.filter(user__id__in=applicant_ids)
+        else:
+            cvs = CV.objects.filter(user=request.user)
+
         context = {
-            'cvs': cv,
+            'cvs': cvs,
         }
         return render(request, 'cv/cv_list.html', context=context)
+
+
