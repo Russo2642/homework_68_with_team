@@ -1,0 +1,44 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% load django_bootstrap5 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+{% bootstrap_messages %}
+{% block title %}Вакансии компании{% endblock %}
+{% block content %}
+<div class="container mt-5">
+    <div class="col-md-10">
+        <h2>Вакансии компании: {{ vacancies.first.author.first_name }}</h2>
+        <hr>
+        {% for vacancy in vacancies %}
+        <div class="card mb-3">
+            <div class="card-header">
+                <h3>{{ vacancy.title }}</h3>
+                <h5 class="text-muted">{{ vacancy.get_profession_display }}</h5>
+            </div>
+            <div class="card-body">
+                <h4 class="card-title">Основные обязанности:</h4>
+                <p class="card-text">{{ vacancy.description }}</p>
+
+                <h4 class="card-title">Зарплата:</h4>
+                <h2>{{ vacancy.salary }} тг</h2>
+            </div>
+            <div class="card-footer text-muted d-flex justify-content-between">
+                <a href="{% url 'vacancy_detail' vacancy.pk %}" class="btn btn-primary">Подробнее</a>
+                {% if user.is_authenticated %}
+                {% if user_has_applied.vacancy.pk %}
+                <button class="btn btn-secondary float-end" disabled>Откликнуться</button>
+                {% else %}
+                <a href="{% url 'apply_vacancy' vacancy.pk %}" class="btn btn-success float-end apply-btn"
+                   id="apply-btn-{{ vacancy.pk }}" data-vacancy-id="{{ vacancy.pk }}">Откликнуться</a>
+                {% endif %}
+                {% endif %}
+
+            </div>
+        </div>
+        {% empty %}
+        <p>Компания не имеет вакансий в настоящее время.</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

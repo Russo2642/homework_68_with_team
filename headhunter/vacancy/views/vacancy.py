@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import redirect
 from django.urls import reverse
 from django.views.generic import DetailView, CreateView, UpdateView, ListView
@@ -50,3 +51,14 @@ class VacancyUpdateView(UpdateView):
 
     def get_success_url(self):
         return reverse('vacancy_detail', kwargs={'pk': self.object.pk})
+
+
+class CompanyVacanciesView(LoginRequiredMixin, ListView):
+    template_name = 'vacancies_company.html'
+    model = Vacancy
+    context_object_name = 'vacancies'
+
+    def get_queryset(self):
+        company_id = self.kwargs['pk']
+        return Vacancy.objects.filter(author_id=company_id)
+

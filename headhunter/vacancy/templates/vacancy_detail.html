@@ -28,8 +28,19 @@
                     </ul>
                 </div>
                 <div class="card-footer text-muted">
-                    Автор вакансии: {{ vacancy.author }}  Компания: {{ vacancy.author.first_name }}
+                    Компания: <a href="{% url 'company_vacancies' vacancy.author.pk %}">{{ vacancy.author.first_name }}</a>
                 </div>
+                {% if user.is_authenticated %}
+                    {% if user_has_applied.vacancy.pk %}
+                        <div class="card-footer">
+                            <button class="btn btn-secondary" disabled>Откликнуться</button>
+                        </div>
+                    {% else %}
+                        <div class="card-footer">
+                            <a href="{% url 'apply_vacancy' vacancy.pk %}" class="btn btn-success apply-btn" id="apply-btn-{{ vacancy.pk }}" data-vacancy-id="{{ vacancy.pk }}">Откликнуться</a>
+                        </div>
+                    {% endif %}
+                {% endif %}
             </div>
         </div>
 
