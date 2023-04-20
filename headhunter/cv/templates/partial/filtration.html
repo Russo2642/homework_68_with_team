@@ -1,0 +1,35 @@
+<div class="col-md-3">
+        <div class="card" style="margin-top: 2rem">
+            <div class="card-body">
+                <h5 class="card-title">Фильтрация и сортировка</h5>
+                <form method="get">
+                    <div class="mb-3">
+                        <label for="category" class="form-label">Категория</label>
+                        <select class="form-select" id="category" name="category">
+                            <option value="">Все категории</option>
+                            {% for category in CategoryChoice %}
+                            <option value="{{ category.0 }}" {% if selected_category == category.0 %}selected{% endif %}>
+                                {{ category.1 }}
+                            </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="sort" class="form-label">Сортировать по</label>
+                        <select class="form-select" id="sort" name="sort">
+                            <option value="" {% if not selected_sort %}selected{% endif %}>Актуальность</option>
+                            <option value="salary_asc" {% if selected_sort == 'salary_asc' %}selected{% endif %}>Зарплата (по возрастающей)</option>
+                            <option value="salary_desc" {% if selected_sort == 'salary_desc' %}selected{% endif %}>Зарплата (по ниспадающей)</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="search" class="form-label">Поиск</label>
+                        <input type="text" name="search" id="search" class="form-control"
+                               placeholder="Профессия, должность или компания" value="{{ search_query|default:'' }}">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Применить</button>
+                    <a href="{% url 'index' %}" class="btn btn-danger">Сбросить</a>
+                </form>
+            </div>
+        </div>
+    </div>

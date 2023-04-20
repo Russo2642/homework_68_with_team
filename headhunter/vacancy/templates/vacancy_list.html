@@ -1,0 +1,20 @@
+{% extends 'base/base.html' %}
+
+{% block content %}
+<div class="container">
+    <h2>My Applications</h2>
+    <div class="list-group">
+        {% for application in applications %}
+        <div class="list-group-item">
+            <h5>{{ application.vacancy.title }}</h5>
+            <p>{{ application.vacancy.description }}</p>
+            <p>{{ application.created_at }}</p>
+        </div>
+        {% empty %}
+        <div class="alert alert-warning" role="alert">
+            You have not applied for any vacancies yet.
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

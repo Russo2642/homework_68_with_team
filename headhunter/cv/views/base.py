@@ -36,11 +36,17 @@ class IndexView(LoginRequiredMixin, View):
         page = request.GET.get('page')
         vacancies = paginator.get_page(page)
 
+        user_has_applied = {}
+        if request.user.is_authenticated:
+            for vacancy in vacancies:
+                user_has_applied[vacancy.pk] = request.user.applications.filter(vacancy=vacancy).exists()
+
         context = {
             'vacancies': vacancies,
             'CategoryChoice': CategoryChoice.choices,
             'selected_category': category,
             'selected_sort': sort,
             'search_query': search,
+            'user_has_applied': user_has_applied,
         }
         return render(request, 'index.html', context=context)

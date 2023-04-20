@@ -3,41 +3,7 @@
 
 {% block content %}
 <div class="row">
-    <div class="col-md-3">
-        <div class="card" style="margin-top: 2rem">
-            <div class="card-body">
-                <h5 class="card-title">Фильтрация и сортировка</h5>
-                <form method="get">
-                    <div class="mb-3">
-                        <label for="category" class="form-label">Категория</label>
-                        <select class="form-select" id="category" name="category">
-                            <option value="">Все категории</option>
-                            {% for category in CategoryChoice %}
-                            <option value="{{ category.0 }}" {% if selected_category == category.0 %}selected{% endif %}>
-                                {{ category.1 }}
-                            </option>
-                            {% endfor %}
-                        </select>
-                    </div>
-                    <div class="mb-3">
-                        <label for="sort" class="form-label">Сортировать по</label>
-                        <select class="form-select" id="sort" name="sort">
-                            <option value="" {% if not selected_sort %}selected{% endif %}>Актуальность</option>
-                            <option value="salary_asc" {% if selected_sort == 'salary_asc' %}selected{% endif %}>Зарплата (по возрастающей)</option>
-                            <option value="salary_desc" {% if selected_sort == 'salary_desc' %}selected{% endif %}>Зарплата (по ниспадающей)</option>
-                        </select>
-                    </div>
-                    <div class="mb-3">
-                        <label for="search" class="form-label">Поиск</label>
-                        <input type="text" name="search" id="search" class="form-control"
-                               placeholder="Профессия, должность или компания" value="{{ search_query|default:'' }}">
-                    </div>
-                    <button type="submit" class="btn btn-primary">Применить</button>
-                    <a href="{% url 'index' %}" class="btn btn-danger">Сбросить</a>
-                </form>
-            </div>
-        </div>
-    </div>
+    {% include "partial/filtration.html" %}
     <div class="col-md-9">
         <div class="row">
             <div class="col-12">
@@ -49,6 +15,13 @@
                         <h6>{{ vacancy.get_profession_display }}</h6>
                         <h6>{{ vacancy.author.first_name }}</h6>
                         <span><a href="{% url 'vacancy_detail' vacancy.pk %}">Подробнее</a></span>
+                        {% if user.is_authenticated %}
+                            {% if user_has_applied.vacancy.pk %}
+                                <button class="btn btn-secondary float-end" disabled>Откликнуться</button>
+                            {% else %}
+                                <a href="{% url 'apply_vacancy' vacancy.pk %}" class="btn btn-success float-end apply-btn" id="apply-btn-{{ vacancy.pk }}" data-vacancy-id="{{ vacancy.pk }}">Откликнуться</a>
+                            {% endif %}
+                        {% endif %}
                     </div>
                 </div>
                 {% empty %}
@@ -58,59 +31,8 @@
                 {% endfor %}
             </div>
         </div>
-        {% if vacancies.has_other_pages %}
-        <div class="row">
-            <div class="col-12">
-                <nav aria-label="Page navigation example" style="margin-top: 2rem">
-                  <ul class="pagination">
-                        {% if vacancies.has_previous %}
-                        <li class="page-item">
-                          <a class="page-link" href="?page=1" aria-label="First">
-                            <span aria-hidden="true">&laquo;</span>
-                            <span class="sr-only">First</span>
-                          </a>
-                        </li>
-                        <li class="page-item">
-                          <a class="page-link" href="?page={{ vacancies.previous_page_number }}" aria-label="Previous">
-                            <span aria-hidden="true">‹</span>
-                            <span class="sr-only">Previous</span>
-                          </a>
-                        </li>
-                        {% else %}
-                        <li class="page-item disabled">
-                          <a class="page-link" href="#" tabindex="-1" aria-disabled="true">&laquo;</a>
-                        </li>
-                        {% endif %}
-
-                        {% for i in vacancies.paginator.page_range %}
-                        <li class="page-item {% if vacancies.number == i %}active{% endif %}">
-                          <a class="page-link" href="?page={{ i }}">{{ i }}</a>
-                        </li>
-                        {% endfor %}
-
-                        {% if vacancies.has_next %}
-                        <li class="page-item">
-                          <a class="page-link" href="?page={{ vacancies.next_page_number }}" aria-label="Next">
-                            <span aria-hidden="true">›</span>
-                            <span class="sr-only">Next</span>
-                          </a>
-                        </li>
-                        <li class="page-item">
-                          <a class="page-link" href="?page={{ vacancies.paginator.num_pages }}" aria-label="Last">
-                            <span aria-hidden="true">&raquo;</span>
-                            <span class="sr-only">Last</span>
-                          </a>
-                        </li>
-                        {% else %}
-                        <li class="page-item disabled">
-                          <a class="page-link" href="#" tabindex="-1" aria-disabled="true">&raquo;</a>
-                        </li>
-                        {% endif %}
-                  </ul>
-                </nav>
-            </div>
-        </div>
-        {% endif %}
+        {% include "partial/pagination.html" %}
     </div>
 </div>
 {% endblock %}
+
