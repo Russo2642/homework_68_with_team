@@ -24,7 +24,12 @@ class IndexView(LoginRequiredMixin, View):
 
         search = request.GET.get('search')
         if search:
-            vacancies = vacancies.filter(Q(title__icontains=search) | Q(description__icontains=search))
+            vacancies = vacancies.filter(
+                Q(title__icontains=search) |
+                Q(description__icontains=search) |
+                Q(author__first_name__icontains=search, author__is_employer=True) |
+                Q(profession__in=[item[0] for item in CategoryChoice.choices if search.lower() in item[1].lower()])
+            )
 
         context = {
             'vacancies': vacancies,

@@ -15,6 +15,14 @@
     <link href="{% static 'fontawesomefree/css/solid.css' %}" rel="stylesheet" type="text/css">
     <link rel="icon" href="https://i.hh.kz/logos/svg/hh.ru__min_.svg?v=11032019" type="image/x-icon"/>
     <title>{% block title %}HeadHunter{% endblock %}</title>
+    <script>
+        function handleKeyPress(event) {
+            if (event.key === 'Enter') {
+                event.preventDefault();
+                document.getElementById('search-form').submit();
+            }
+        }
+    </script>
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark" style="height: 80px">
@@ -42,10 +50,10 @@
                 </li>
                 {% endif %}
             </ul>
-            <form class="form-inline" action="{% url 'index' %}" method="get">
+            <form class="form-inline" action="{% url 'index' %}" method="get" id="search-form">
                 <input type="text" name="search" id="search" class="form-control"
-                       placeholder="Поиск по названию должности" value="{{ search_query|default:'' }}">
-                <button type="submit" class="btn btn-outline-secondary">Поиск</button>
+                       placeholder="Поиск по названию должности" value="{{ search_query|default:'' }}"
+                       onkeypress="handleKeyPress(event)">
             </form>
             {% if user.is_authenticated %}
             <button type="button" class="btn btn-outline-success">

@@ -30,7 +30,7 @@
                     <div class="mb-3">
                         <label for="search" class="form-label">Поиск</label>
                         <input type="text" name="search" id="search" class="form-control"
-                               placeholder="Поиск по названию должности" value="{{ search_query|default:'' }}">
+                               placeholder="Профессия, должность или компания" value="{{ search_query|default:'' }}">
                     </div>
                     <button type="submit" class="btn btn-primary">Применить</button>
                     <a href="{% url 'index' %}" class="btn btn-danger">Сбросить</a>
@@ -43,8 +43,9 @@
         <div class="card w-75" style="margin-top: 2rem">
             <div class="card-body">
                 <h4 class="card-title">{{ vacancy.title }}</h4>
-                <h5>{{ vacancy.get_profession_display }}</h5>
                 <h5>{{ vacancy.salary }}</h5>
+                <h6>{{ vacancy.get_profession_display }}</h6>
+                <h6>{{ vacancy.author.first_name }}</h6>
                 <span><a href="{% url 'vacancy_detail' vacancy.pk %}">Подробнее</a></span>
             </div>
         </div>
