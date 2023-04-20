@@ -1,0 +1,24 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% load django_bootstrap5 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+{% bootstrap_messages %}
+{% block content %}
+<main class="cv">
+    <div class="container">
+        <div class="cv-wrapper">
+            <form action="{% url 'vacancy_update' vacancy.pk %}" method="post">
+                {% csrf_token %}
+                <span>{% bootstrap_field form.title placeholder="" %}</span>
+                <span>{% bootstrap_field form.salary placeholder="" %}</span>
+                <span>{% bootstrap_field form.description placeholder="" %}</span>
+                <span>{% bootstrap_field form.profession placeholder="" %}</span>
+                <span>{% bootstrap_field form.exp_from placeholder="" %}</span>
+                <span>{% bootstrap_field form.exp_before placeholder="" %}</span>
+                {% bootstrap_button button_type="submit" content="Обновить" %}
+            </form>
+        </div>
+    </div>
+</main>
+{% endblock %}
