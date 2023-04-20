@@ -1,8 +1,14 @@
 from django.shortcuts import redirect
 from django.urls import reverse
-from django.views.generic import DetailView, CreateView, UpdateView
+from django.views.generic import DetailView, CreateView, UpdateView, ListView
 from vacancy.forms import VacancyForm
 from vacancy.models import Vacancy
+
+
+class VacancyListView(ListView):
+    template_name = 'vacancies.html'
+    model = Vacancy
+    context_object_name = 'vacancies'
 
 
 class VacancyCreateView(CreateView):
