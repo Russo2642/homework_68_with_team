@@ -43,7 +43,9 @@
                 {% endif %}
             </ul>
             <form class="form-inline" action="{% url 'index' %}" method="get">
-                <input type="text" name="search" type="search" placeholder="Поиск">
+                <input type="text" name="search" id="search" class="form-control"
+                       placeholder="Поиск по названию должности" value="{{ search_query|default:'' }}">
+                <button type="submit" class="btn btn-outline-secondary">Поиск</button>
             </form>
             {% if user.is_authenticated %}
             <button type="button" class="btn btn-outline-success">
