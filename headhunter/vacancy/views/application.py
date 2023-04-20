@@ -1,3 +1,4 @@
+from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse
@@ -18,7 +19,11 @@ class ApplyVacancyView(LoginRequiredMixin, View):
         vacancy = get_object_or_404(Vacancy, pk=vacancy_id)
         cv = request.user.cv.first()
 
-        if cv and not Application.objects.filter(applicant=request.user, vacancy=vacancy).exists():
-            Application.objects.create(applicant=request.user, vacancy=vacancy)
-
-        return redirect(reverse('my_applications'))
+        if cv:
+            if not Application.objects.filter(applicant=request.user, vacancy=vacancy).exists():
+                Application.objects.create(applicant=request.user, vacancy=vacancy)
+                messages.success(request, 'Вы успешно откликнулись на вакансию.')
+            return redirect(reverse('my_applications'))
+        else:
+            messages.warning(request, 'Для отклика на вакансию необходимо создать резюме.')
+            return redirect('cv_create')
