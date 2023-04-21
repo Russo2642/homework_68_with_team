@@ -15,7 +15,7 @@
                         <h6>{{ vacancy.get_profession_display }}</h6>
                         <h6>{{ vacancy.author.first_name }}</h6>
                         <span><a href="{% url 'vacancy_detail' vacancy.pk %}">Подробнее</a></span>
-                        {% if user.is_authenticated %}
+                        {% if user.is_authenticated and not user.is_employer %}
                             {% if user_has_applied.vacancy.pk %}
                                 <button class="btn btn-secondary float-end" disabled>Откликнуться</button>
                             {% else %}

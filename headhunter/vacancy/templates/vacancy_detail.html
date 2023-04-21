@@ -30,7 +30,7 @@
                 <div class="card-footer text-muted">
                     Компания: <a href="{% url 'company_vacancies' vacancy.author.pk %}">{{ vacancy.author.first_name }}</a>
                 </div>
-                {% if user.is_authenticated %}
+                {% if user.is_authenticated and not user.is_employer %}
                     {% if user_has_applied.vacancy.pk %}
                         <div class="card-footer">
                             <button class="btn btn-secondary" disabled>Откликнуться</button>

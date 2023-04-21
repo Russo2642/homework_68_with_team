@@ -27,3 +27,12 @@ class ApplyVacancyView(LoginRequiredMixin, View):
         else:
             messages.warning(request, 'Для отклика на вакансию необходимо создать резюме.')
             return redirect('cv_create')
+
+class ApplicantsView(LoginRequiredMixin, View):
+    def get(self, request):
+        applicants = Application.objects.filter(vacancy__author=request.user)
+
+        context = {
+            'applicants': applicants,
+        }
+        return render(request, 'applicants.html', context=context)

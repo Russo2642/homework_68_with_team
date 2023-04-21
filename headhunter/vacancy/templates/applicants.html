@@ -1,0 +1,23 @@
+{% extends 'base/base.html' %}
+{% load django_bootstrap5 %}
+
+{% block content %}
+    <h1>Кандидаты</h1>
+    <div class="row">
+        {% for applicant in applicants %}
+            <div class="col-md-6 mb-4">
+                <div class="card w-100" style="margin-top: 2rem">
+                    <div class="card-body">
+                        <h4 class="card-title">{{ applicant.applicant.first_name }} {{ applicant.applicant.last_name }}</h4>
+                        <h5>Вакансия: {{ applicant.vacancy.title }}</h5>
+                        <h6>Дата отклика: {{ applicant.created_at|date:"d.m.Y" }}</h6>
+                        <h6>Категория: {{ applicant.applicant.cv.get_profession_display }}</h6>
+                        <h6>Опыт работы: {{ applicant.applicant.cv.exp_from }} - {{ applicant.applicant.cv.exp_before }}</h6>
+                        <h6>Последнее место работы: {{ applicant.applicant.cv.last_job }}</h6>
+                        <h6>Телефон: {{ applicant.applicant.phone_number }}</h6>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}
