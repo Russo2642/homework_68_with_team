@@ -78,7 +78,6 @@
            <button style="color:red;" type="button" class="btn btn-outline-red"
                    data-bs-toggle="modal" data-bs-target="#ModalDeleteCV">Удалить резюме</button>
             {% include 'partial/cv_confirm_delete.html' %}
-            <a href="{% url 'pdf' cv.pk %}">Скачать в PDF</a>
         {% endif %}
     </div>
     <div class="index-card">
