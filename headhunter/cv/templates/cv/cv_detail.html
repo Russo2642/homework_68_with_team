@@ -32,11 +32,15 @@
             {% for job in cv.job_exp.all %}
             <h4>{{ job.job_place }}</h4>
             <p>Должность: {{ job.job_position }}</p>
-            <p>Стаж: {% if job.job_exp == 1 %}{{ job.job_exp }} год{% elif job.job_exp > 1 and job.job_exp <= 4.5 %}{{
-                job.job_exp }} года{% else %}{{ job.job_exp }} лет{% endif %}</p>
+            <p>Стаж: {% if job.job_exp == 1 %}
+                {{ job.job_exp }} год
+                {% elif job.job_exp > 1 and job.job_exp <= 4.5 %}
+                {{ job.job_exp }} года
+                {% else %}
+                {{ job.job_exp }} лет{% endif %}</p>
             <p>Обязанности:</p>
             <p>{{ job.job_description }}</p>
-            {% if request.user == cv.author %}
+            {% if request.user == cv.user %}
             <p><a href="{% url 'job_update' job.pk %}" class="btn btn-outline-dark">Редактировать опыт работы</a></p>
             {% endif %}
             <hr>
