@@ -72,8 +72,17 @@
         </div>
         {% for vacancy in user_obj.vacancy.all %}
             <div class="card" style="margin-top: 15px">
-                <div class="card-header" style="display: block">
-                    <a href="{% url 'vacancy_detail' vacancy.pk %}">Просмотреть Вакансию</a>
+                <div class="card-header" style="display: flex;">
+                    <span>
+                    <form action="{% url 'vacancy_publish' vacancy.pk %}" method="post"> {% csrf_token %}
+                        {% if vacancy.is_published %}
+                            <button class="index-stats-button" style="margin-top: 7px"  type="submit">Снять с публикации</button>
+                        {% else %}
+                            <button class="index-stats-button" style="margin-top: 7px" type="submit">Опубликовать</button>
+                        {% endif %}
+                    </form>
+                  </span>
+                    <a href="{% url 'vacancy_detail' vacancy.pk %}" style="margin-top: 7px;margin-left: 10px">Просмотреть Вакансию</a>
                     {% if user_obj == request.user %}
                         <button style="color:red; text-decoration: underline" type="button" class="btn btn-outline-red"
                                 data-bs-toggle="modal" data-bs-target="#ModalDeleteCV">Удалить вакансию
@@ -85,7 +94,7 @@
                     <h3>{{ vacancy.title }}</h3>
                     <p>Обновлено <span>{{ vacancy.updated_at }}</span></p>
                     <div class="index-stats">
-                        <form action="{% url 'update_button' vacancy.pk %}" method="post"> {% csrf_token %}
+                        <form action="{% url 'update_list' vacancy.pk %}" method="post"> {% csrf_token %}
                             <button class="index-stats-button" type="submit">Поднять в поиске</button>
                         </form>
                     </div>
@@ -113,7 +122,7 @@
                 {% else %}
                     <button class="index-stats-button" type="submit">Опубликовать</button>
                 {% endif %}
-        </form>
+            </form>
         </span>
                     <a href="{% url 'cv_detail' cv.pk %}">Посмотреть резюме</a>
                     {% if user_obj == request.user %}
@@ -121,7 +130,7 @@
                                 data-bs-toggle="modal" data-bs-target="#ModalDeleteCV">Удалить резюме
                         </button>
                         {% include 'partial/cv_confirm_delete.html' %}
-                    <a href="{% url 'pdf' cv.pk %}">Скачать в PDF</a>
+                        <a href="{% url 'pdf' cv.pk %}">Скачать в PDF</a>
                     {% endif %}
                 </div>
                 <div class="index-card">
