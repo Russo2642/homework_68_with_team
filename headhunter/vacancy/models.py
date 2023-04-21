@@ -48,6 +48,11 @@ class Vacancy(models.Model):
         null=False,
         blank=False
     )
+    is_published = models.BooleanField(
+        null=False,
+        blank=False,
+        default=False
+    )
 
     created_at = models.DateTimeField(
         verbose_name='Дата создания',

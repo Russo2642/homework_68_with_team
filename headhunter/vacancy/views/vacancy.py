@@ -1,6 +1,7 @@
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from django.shortcuts import redirect
+from django.shortcuts import redirect, get_object_or_404
 from django.urls import reverse, reverse_lazy
+from django.views import View
 from django.views.generic import DetailView, CreateView, UpdateView, ListView, DeleteView
 from vacancy.forms import VacancyForm
 from vacancy.models import Vacancy
@@ -62,6 +63,23 @@ class VacancyDeleteView(UserPassesTestMixin, DeleteView):
     def test_func(self):
         return self.get_object().author == self.request.user
 
+
+class IsPublishView(View):
+    def post(self, request, pk):
+        vacancy = get_object_or_404(Vacancy, pk=pk)
+        if vacancy.is_published:
+            vacancy.is_published = False
+        else:
+            vacancy.is_published = True
+        vacancy.save()
+        return redirect(request.META.get('HTTP_REFERER', '/'))
+
+
+class UpdateListView(View):
+    def post(self, request, pk):
+        vacancy = get_object_or_404(Vacancy, pk=pk)
+        vacancy.save()
+        return redirect(request.META.get('HTTP_REFERER', '/'))
 
 class CompanyVacanciesView(LoginRequiredMixin, ListView):
     template_name = 'vacancies_company.html'
