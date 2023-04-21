@@ -7,7 +7,7 @@ class Vacancy(models.Model):
     author = models.ForeignKey(
         to=get_user_model(),
         verbose_name='Работодатель',
-        related_name='employer',
+        related_name='vacancy',
         null=False,
         blank=False,
         on_delete=models.CASCADE
@@ -48,6 +48,7 @@ class Vacancy(models.Model):
         null=False,
         blank=False
     )
+
     created_at = models.DateTimeField(
         verbose_name='Дата создания',
         auto_now_add=True
