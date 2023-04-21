@@ -1,3 +1,9 @@
+import io
+
+from django.http import FileResponse
+from reportlab.pdfgen import canvas
+from reportlab.lib.units import inch
+from reportlab.lib.pagesizes import letter
 from cv.forms import CVForm
 from cv.forms import JobExpForm
 from cv.models.cv import CV
@@ -107,3 +113,48 @@ class CVListView(LoginRequiredMixin, View):
         return render(request, 'cv/cv_list.html', context=context)
 
 
+def get_to_pdf(request, pk):
+    buffer = io.BytesIO()
+    c = canvas.Canvas(buffer, pagesize=letter, bottomup=0)
+    textobj = c.beginText()
+    textobj.setTextOrigin(inch, inch)
+    textobj.setFont("Helvetica", 14)
+    cvs = CV.objects.filter(pk=pk)
+    lines = []
+    for cv in cvs:
+        lines.append(f"{request.user.first_name} {request.user.last_name}")
+        lines.append(cv.title)
+        lines.append(f"Category - {cv.category}")
+        lines.append(f"Email - {cv.email}")
+        lines.append(f"Phone - {cv.phone}")
+        lines.append(f"Salary - {cv.salary}")
+        lines.append(f"Date of birth - {cv.date_birth}")
+        lines.append(f"Sex - {cv.sex}")
+        lines.append(f"Marital status - {cv.marital_status}")
+        lines.append(f"Address 1 - {cv.address1}")
+        lines.append(f"Address 2 - {cv.address2}")
+        lines.append(f"City - {cv.city}")
+        lines.append(f"Telegram - {cv.telegram}")
+        lines.append(f"Whatsapp - {cv.whatsapp}")
+        lines.append(f"Linkedin - {cv.linkedin}")
+        lines.append(f"Facebook - {cv.facebook}")
+        lines.append(f"CV created at - {cv.created_at}")
+        lines.append(" ")
+        lines.append("Job experience")
+        for job in cv.job_exp.all():
+            lines.append(f"Company - {job.job_place}")
+            lines.append(f"Standing - {job.job_exp}")
+            lines.append(f"Position - {job.job_position}")
+            lines.append(f"Description - {job.job_description}")
+    for line in lines:
+        textobj.textLine(line)
+
+    c.drawText(textobj)
+    c.showPage()
+    c.save()
+    buffer.seek(0)
+    return FileResponse(
+        buffer,
+        as_attachment=True,
+        filename=f"CV_{request.user.first_name}_{request.user.last_name}.pdf"
+    )
