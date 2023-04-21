@@ -9,7 +9,8 @@ from cv.views.cv import (
     JobExpUpdateView,
     UpdateButtonView,
     IsPublishedView,
-    CVListView
+    CVListView,
+    get_to_pdf
 )
 
 from cv.views.base import IndexView
@@ -25,5 +26,6 @@ urlpatterns = [
     path('cv/<int:pk>/create/about_job/', JobExpCreateView.as_view(), name='job_create'),
     path('cv/<int:pk>/about_job/update/', JobExpUpdateView.as_view(), name='job_update'),
     path('cv/<int:pk>/update_button', UpdateButtonView.as_view(), name='update_button'),
-    path('cv/<int:pk>/publishing/', IsPublishedView.as_view(), name='publishing')
+    path('cv/<int:pk>/publishing/', IsPublishedView.as_view(), name='publishing'),
+    path('cv/<int:pk>/pdf/', get_to_pdf, name='pdf')
 ]
