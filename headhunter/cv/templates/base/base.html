@@ -68,7 +68,7 @@
             <form class="form-inline" action="{% url 'index' %}" method="get" id="search-form">
                 <input type="text" name="search" id="search" class="form-control"
                        placeholder="Поиск по названию должности" value="{{ search_query|default:'' }}"
-                       onkeypress="handleKeyPress(event)">
+                       onkeypress="handleKeyPress(event)" style="margin-left: -10px">
             </form>
             {% if user.is_authenticated and not user.is_employer %}
             <button type="button" class="btn btn-outline-success">
