@@ -4,19 +4,25 @@
 {% block content %}
     <h1>Кандидаты</h1>
     <div class="row">
-        {% for applicant in applicants %}
-            <div class="col-md-6 mb-4">
-                <div class="card w-100" style="margin-top: 2rem">
+        {% for application in applications %}
+            <div class="col-md-4">
+                <div class="card" style="margin-top: 2rem">
                     <div class="card-body">
-                        <h4 class="card-title">{{ applicant.applicant.first_name }} {{ applicant.applicant.last_name }}</h4>
-                        <h5>Вакансия: {{ applicant.vacancy.title }}</h5>
-                        <h6>Дата отклика: {{ applicant.created_at|date:"d.m.Y" }}</h6>
-                        <h6>Категория: {{ applicant.applicant.cv.get_profession_display }}</h6>
-                        <h6>Опыт работы: {{ applicant.applicant.cv.exp_from }} - {{ applicant.applicant.cv.exp_before }}</h6>
-                        <h6>Последнее место работы: {{ applicant.applicant.cv.last_job }}</h6>
-                        <h6>Телефон: {{ applicant.applicant.phone_number }}</h6>
+                        <h5 class="card-title">{{ application.applicant.first_name }} {{ application.applicant.last_name }}</h5>
+                        <p class="card-text">{{ application.vacancy.title }}</p>
+                        <p class="card-text">{{ application.created_at }}</p>
+                        <p class="card-text">{{ application.applicant.cv.position }}</p>
+                        <p class="card-text">{{ application.applicant.cv.get_category_display }}</p>
+                        <p class="card-text">{{ application.applicant.cv.experience }}</p>
+                        <p class="card-text">{{ application.applicant.cv.last_job }}</p>
+                        <p class="card-text">{{ application.applicant.phone_number }}</p>
+                        <a href="{% url 'chat' application.vacancy.pk application.applicant.pk %}" class="btn btn-primary">Чат</a>
                     </div>
                 </div>
+            </div>
+        {% empty %}
+            <div class="alert alert-warning" role="alert" style="margin-top: 2rem">
+                Нет кандидатов, соответствующих вашим критериям.
             </div>
         {% endfor %}
     </div>

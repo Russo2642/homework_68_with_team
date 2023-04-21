@@ -1,6 +1,7 @@
 from django.urls import path
 from vacancy.views.vacancy import VacancyCreateView, VacancyDetailView, VacancyUpdateView, VacancyListView, CompanyVacanciesView
 from vacancy.views.application import ApplyVacancyView, UserApplicationsView, ApplicantsView
+from vacancy.views.chat import ChatView, ChatListView
 
 
 urlpatterns = [
@@ -12,4 +13,6 @@ urlpatterns = [
     path('my_applications/', UserApplicationsView.as_view(), name='my_applications'),
     path('vacancies_company/<int:pk>/', CompanyVacanciesView.as_view(), name='company_vacancies'),
     path('applicants/', ApplicantsView.as_view(), name='applicants'),
+    path('chat/<int:vacancy_id>/<int:applicant_id>/', ChatView.as_view(), name='chat'),
+    path('chats/', ChatListView.as_view(), name='chats'),
 ]

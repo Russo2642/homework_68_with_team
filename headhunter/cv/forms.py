@@ -1,14 +1,12 @@
 from django import forms
-
 from cv.models import CV
-
 from cv.models import JobExperience
 
 
 class CVForm(forms.ModelForm):
     phone = forms.RegexField(
         regex=r'[^\+?1?\d{9,15}$]',
-        error_messages=({'invalid': 'Введите номер телефона в формате +77771234567. Максимум 15 цифр.'}),
+        error_messages=({'invalid': 'Введите номер телефона в формате +7 777 123 4567. Максимум 15 цифр.'}),
     )
 
     class Meta:

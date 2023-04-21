@@ -91,4 +91,26 @@ class Application(models.Model):
         verbose_name = 'Application'
 
 
+class Message(models.Model):
+    sender = models.ForeignKey(
+        get_user_model(),
+        related_name="sent_messages",
+        on_delete=models.CASCADE,
+    )
+    recipient = models.ForeignKey(
+        get_user_model(),
+        related_name="received_messages",
+        on_delete=models.CASCADE,
+    )
+    vacancy_id = models.PositiveIntegerField()
+    applicant_id = models.PositiveIntegerField()
+    text = models.TextField()
+    timestamp = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.sender} to {self.recipient}: {self.text}"
+
+    class Meta:
+        ordering = ["timestamp"]
+
 

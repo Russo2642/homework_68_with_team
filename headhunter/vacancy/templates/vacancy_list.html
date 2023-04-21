@@ -9,6 +9,7 @@
             <h5>{{ application.vacancy.title }}</h5>
             <p>{{ application.vacancy.description }}</p>
             <p>{{ application.created_at }}</p>
+            <a href="{% url 'chat' vacancy_id=application.vacancy.id applicant_id=user_id %}" class="btn btn-primary">Чат</a>
         </div>
         {% empty %}
         <div class="alert alert-warning" role="alert">

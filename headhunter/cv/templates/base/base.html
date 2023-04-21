@@ -25,6 +25,7 @@
 
 
 
+
     </script>
 </head>
 <body>
@@ -47,6 +48,9 @@
                 <li class="nav-item">
                     <a class="nav-link active" href="{% url 'applicants' %}">Кандидаты</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="{% url 'chats' %}">Чаты</a>
+                </li>
                 {% else %}
                 <li class="nav-item">
                     <a class="nav-link active" href="{% url 'my_cv' %}">Мои резюме</a>
@@ -54,8 +58,12 @@
                 <li class="nav-item">
                     <a class="nav-link active" href="{% url 'my_applications' %}">Отклики</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="{% url 'chats' %}">Чаты</a>
+                </li>
                 {% endif %}
                 {% endif %}
+
             </ul>
             <form class="form-inline" action="{% url 'index' %}" method="get" id="search-form">
                 <input type="text" name="search" id="search" class="form-control"

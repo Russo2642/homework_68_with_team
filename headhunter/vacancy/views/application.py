@@ -11,7 +11,7 @@ class UserApplicationsView(LoginRequiredMixin, View):
 
     def get(self, request):
         applications = Application.objects.filter(applicant=request.user)
-        return render(request, self.template_name, {'applications': applications})
+        return render(request, self.template_name, {'applications': applications, 'user_id': request.user.id})
 
 
 class ApplyVacancyView(LoginRequiredMixin, View):
@@ -28,11 +28,13 @@ class ApplyVacancyView(LoginRequiredMixin, View):
             messages.warning(request, 'Для отклика на вакансию необходимо создать резюме.')
             return redirect('cv_create')
 
+
 class ApplicantsView(LoginRequiredMixin, View):
     def get(self, request):
-        applicants = Application.objects.filter(vacancy__author=request.user)
+        employer = request.user
+        applications = Application.objects.filter(vacancy__author=employer)
 
         context = {
-            'applicants': applicants,
+            'applications': applications,
         }
         return render(request, 'applicants.html', context=context)

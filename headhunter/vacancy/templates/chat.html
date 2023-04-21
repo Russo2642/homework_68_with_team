@@ -1,0 +1,26 @@
+{% extends 'base/base.html' %}
+{% load django_bootstrap5 %}
+
+{% block content %}
+    <h1>Чат между работодателем и соискателем</h1>
+    <p>Чат для вакансии {{ vacancy_id }} и соискателя {{ applicant_id }}.</p>
+
+    <div class="chat_messages">
+        {% for message in chat_messages %}
+            <div class="message{% if message.sender == user %} sent{% else %} received{% endif %}">
+                <p><strong>{{ message.sender.first_name }} {{ message.sender.last_name }}:</strong> {{ message.text }}</p>
+            </div>
+        {% empty %}
+            <p>Нет сообщений.</p>
+        {% endfor %}
+    </div>
+
+    <form method="post">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="text" class="form-label">Сообщение:</label>
+            <input type="text" class="form-control" id="text" name="text">
+        </div>
+        <button type="submit" class="btn btn-primary">Отправить сообщение</button>
+    </form>
+{% endblock %}

@@ -1,0 +1,18 @@
+{% extends 'base/base.html' %}
+{% load django_bootstrap5 %}
+
+{% block content %}
+    <h1>Список чатов</h1>
+
+    <div class="chat_list">
+        {% for chat in chats %}
+            <div class="chat_item">
+                <a href="{% url 'chat' chat.vacancy_id chat.applicant_id %}">
+                    Чат для вакансии {{ chat.vacancy_id }} и соискателя {{ chat.applicant_id }}
+                </a>
+            </div>
+        {% empty %}
+            <p>Нет чатов.</p>
+        {% endfor %}
+    </div>
+{% endblock %}
