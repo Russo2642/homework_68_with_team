@@ -1,14 +1,23 @@
 {% extends 'base/base.html' %}
+{% load static %}
 {% load django_bootstrap5 %}
-{% block title%}
-    Create Vacancy
-{% endblock %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+{% bootstrap_messages %}
 {% block content %}
-<div class="container">
-    <form action="{% url 'vacancy_create' %}" method="POST">
-        {% csrf_token %}
-        {% bootstrap_form form %}
-        <button type="submit" class="btn btn-secondary">Создать вакансию</button>
-    </form>
-</div>
+<main class="cv">
+    <div class="container">
+        <div class="cv-wrapper">
+            <form action="{% url 'vacancy_create' %}" method="post"> {% csrf_token %}
+                <span>{% bootstrap_field form.title placeholder="" %}</span>
+                <span>{% bootstrap_field form.profession placeholder="" %}</span>
+                <span>{% bootstrap_field form.salary placeholder="" %}</span>
+                <span>{% bootstrap_field form.description placeholder="" %}</span>
+                <span>{% bootstrap_field form.exp_from placeholder="" %}</span>
+                <span>{% bootstrap_field form.exp_before placeholder="" %}</span>
+                {% bootstrap_button button_type="submit" content="Создать" %}
+            </form>
+        </div>
+    </div>
+</main>
 {% endblock %}

@@ -1,97 +1,142 @@
 {% extends 'base/base.html' %}
 {% load django_bootstrap5 %}
 {% block menu %}
-{% if user_obj == request.user %}
-<form action="{% url 'logout' %}" method="post">
-    {% csrf_token %}
-    <input style="width:100px" type="submit" class="btn btn-danger" value="Выйти">
-</form>
-{% endif %}
+    {% if user_obj == request.user %}
+        <form action="{% url 'logout' %}" method="post">
+            {% csrf_token %}
+            <input style="width:100px" type="submit" class="btn btn-danger" value="Выйти">
+        </form>
+    {% endif %}
 {% endblock %}
 {% block content %}
 
 
-<div class="container">
+    <div class="container">
 
-    <table id="user-table">
-        <tbody>
-        <tr>
-            <td>
-                {% if user_obj.avatar %}
-                <img style="width:150px; height:150px" class="avatar" src="{{ user_obj.avatar.url }}" alt="user picture">
-                {% else %}
-                <img class="avatar" style="width:150px; height:150px"
-                     src="../../../uploads/user_pic/default.jpg"
-                     alt="user picture">
-                {% endif %}
-            </td>
-        </tr>
-        <tr>
-            <td>Имя</td>
-            <td>{{ user_obj.first_name }} {{ user_obj.last_name }}</td>
-        </tr>
-        <tr>
-            <td>Телефон</td>
-            <td>{{ user_obj.phone }}</td>
-        </tr>
-        <tr>
-            <td>Электронная почта</td>
-            <td>{{ user_obj.email }}</td>
-        </tr>
-        <tr>
-            <td>
-                {% if user_obj == request.user %}
-                <button type="button" class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#ModalChangeProfile">
-                    Редактировать профиль
-                </button>
-                {% endif %}
-                {% include 'partial/user_change.html' %}
-            </td>
-        </tr>
-        </tbody>
-
-    </table>
-
-</div>
-
-<main class="index">
-    <div class="index-top">
-        <h3>Мои резюме</h3>
-        {% if user_obj == request.user %}
-        <button><a href="{% url 'cv_create' %}" class="create-res" style="text-decoration:none; color:black;">Создать
-            резюме</a></button>
-        {% endif %}
+        <table id="user-table">
+            <tbody>
+            <tr>
+                <td>
+                    {% if user_obj.avatar %}
+                        <img style="width:150px; height:150px" class="avatar" src="{{ user_obj.avatar.url }}"
+                             alt="user picture">
+                    {% else %}
+                        <img class="avatar" style="width:150px; height:150px"
+                             src="../../../uploads/user_pic/default.jpg"
+                             alt="user picture">
+                    {% endif %}
+                </td>
+            </tr>
+            {% if user_obj.is_employer %}
+                <tr>
+                    <td>Название компании</td>
+                    <td>{{ user_obj.first_name }}</td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td>Имя</td>
+                    <td>{{ user_obj.first_name }} {{ user_obj.last_name }}</td>
+                </tr>
+            {% endif %}
+            <tr>
+                <td>Телефон</td>
+                <td>{{ user_obj.phone }}</td>
+            </tr>
+            <tr>
+                <td>Электронная почта</td>
+                <td>{{ user_obj.email }}</td>
+            </tr>
+            <tr>
+                <td>
+                    {% if user_obj == request.user %}
+                        <button type="button" class="btn btn-outline-dark" data-bs-toggle="modal"
+                                data-bs-target="#ModalChangeProfile">
+                            Редактировать профиль
+                        </button>
+                    {% endif %}
+                    {% include 'partial/user_change.html' %}
+                </td>
+            </tr>
+            </tbody>
+        </table>
     </div>
-    {% for cv in user_obj.cv.all %}
-    <div class="index-status">
+    {% if user_obj.is_employer %}
+        <main class="index">
+        <div class="index-top">
+            <h3>Вакансии компании</h3>
+            {% include "partial/pagination.html" %}
+            {% if user_obj == request.user %}
+                <button><a href="{% url 'vacancy_create' %}" class="create-res"
+                           style="text-decoration:none; color:black;">Создать вакансию</a></button>
+            {% endif %}
+        </div>
+        {% for vacancy in user_obj.vacancy.all %}
+            <div class="card" style="margin-top: 15px">
+                <div class="card-header" style="display: block">
+                    <a href="{% url 'vacancy_detail' vacancy.pk %}">Просмотреть Вакансию</a>
+                    {% if user_obj == request.user %}
+                        <button style="color:red; text-decoration: underline" type="button" class="btn btn-outline-red"
+                                data-bs-toggle="modal" data-bs-target="#ModalDeleteCV">Удалить вакансию
+                        </button>
+                        {% include 'partial/vacancy_confirm_delete.html' %}
+                    {% endif %}
+                </div>
+                <div class="index-card" style="margin-top: 0px">
+                    <h3>{{ vacancy.title }}</h3>
+                    <p>Обновлено <span>{{ vacancy.updated_at }}</span></p>
+                    <div class="index-stats">
+                        <form action="{% url 'update_button' vacancy.pk %}" method="post"> {% csrf_token %}
+                            <button class="index-stats-button" type="submit">Поднять в поиске</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <h1><p>Вакансии не найдены</p></h1>
+        {% endfor %}
+    {% else %}
+        <main class="index">
+            <div class="index-top">
+                <h3>Мои резюме</h3>
+                {% if user_obj == request.user %}
+                    <button><a href="{% url 'cv_create' %}" class="create-res"
+                               style="text-decoration:none; color:black;">Создать
+                        резюме</a></button>
+                {% endif %}
+            </div>
+            {% for cv in user_obj.cv.all %}
+                <div class="index-status">
         <span>
             <form action="{% url 'publishing' cv.pk %}" method="post"> {% csrf_token %}
-            {% if cv.is_published %}
-            <button class="index-stats-button" type="submit">Снять с публикации</button>
-            {% else %}
-            <button class="index-stats-button" type="submit">Опубликовать</button>
-            {% endif %}
+                {% if cv.is_published %}
+                    <button class="index-stats-button" type="submit">Снять с публикации</button>
+                {% else %}
+                    <button class="index-stats-button" type="submit">Опубликовать</button>
+                {% endif %}
         </form>
         </span>
-        <a href="{% url 'cv_detail' cv.pk %}">Посмотреть резюме</a>
-        {% if user_obj == request.user %}
-           <button style="color:red;" type="button" class="btn btn-outline-red"
-                   data-bs-toggle="modal" data-bs-target="#ModalDeleteCV">Удалить резюме</button>
-            {% include 'partial/cv_confirm_delete.html' %}
-        {% endif %}
-    </div>
-    <div class="index-card">
-        <h3>{{ cv.title }}</h3>
-        <p>Обновлено <span>{{ cv.updated_at }}</span></p>
-        <div class="index-stats">
-            <form action="{% url 'update_button' cv.pk %}" method="post"> {% csrf_token %}
-                <button class="index-stats-button" type="submit">Поднять в поиске</button>
-            </form>
-        </div>
-    </div>
-    {% empty %}
-    <h1><p>Резюме не найдены</p></h1>
-    {% endfor %}
-</main>
+                    <a href="{% url 'cv_detail' cv.pk %}">Посмотреть резюме</a>
+                    {% if user_obj == request.user %}
+                        <button style="color:red;" type="button" class="btn btn-outline-red"
+                                data-bs-toggle="modal" data-bs-target="#ModalDeleteCV">Удалить резюме
+                        </button>
+                        {% include 'partial/cv_confirm_delete.html' %}
+                    {% endif %}
+                </div>
+                <div class="index-card">
+                    <h3>{{ cv.title }}</h3>
+                    <p>Обновлено <span>{{ cv.updated_at }}</span></p>
+                    <div class="index-stats">
+                        <form action="{% url 'update_button' cv.pk %}" method="post"> {% csrf_token %}
+                            <button class="index-stats-button" type="submit">Поднять в поиске</button>
+                        </form>
+                    </div>
+                </div>
+                {% empty %}
+                <h1><p>Резюме не найдены</p></h1>
+            {% endfor %}
+        </main>
+    {% endif %}
+
 
 {% endblock %}
