@@ -1,7 +1,7 @@
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.shortcuts import redirect
-from django.urls import reverse
-from django.views.generic import DetailView, CreateView, UpdateView, ListView
+from django.urls import reverse, reverse_lazy
+from django.views.generic import DetailView, CreateView, UpdateView, ListView, DeleteView
 from vacancy.forms import VacancyForm
 from vacancy.models import Vacancy
 
@@ -53,6 +53,16 @@ class VacancyUpdateView(UpdateView):
         return reverse('vacancy_detail', kwargs={'pk': self.object.pk})
 
 
+class VacancyDeleteView(UserPassesTestMixin, DeleteView):
+    model = Vacancy
+
+    def get_success_url(self):
+        return reverse_lazy('profile', kwargs={'pk': self.object.author_id})
+
+    def test_func(self):
+        return self.get_object().author == self.request.user
+
+
 class CompanyVacanciesView(LoginRequiredMixin, ListView):
     template_name = 'vacancies_company.html'
     model = Vacancy
@@ -61,4 +71,3 @@ class CompanyVacanciesView(LoginRequiredMixin, ListView):
     def get_queryset(self):
         company_id = self.kwargs['pk']
         return Vacancy.objects.filter(author_id=company_id)
-

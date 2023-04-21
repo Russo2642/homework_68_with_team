@@ -8,12 +8,12 @@
                 {% for vacancy in vacancies %}
                     <div class="card w-75" style="margin-top: 2rem">
                         <div class="card-body">
-                            <h4 class="card-title">{{ vacancy.title }}</h4>
-                            <h5>{{ vacancy.salary }}</h5>
+                            <h3 class="card-title">{{ vacancy.title }}</h3>
+                            <h6>{{ vacancy.salary }}</h6>
                             <h6>{{ vacancy.get_profession_display }}</h6>
                             <h6>{{ vacancy.author.first_name }}</h6>
-                            <span><a href="{% url 'vacancy_detail' vacancy.pk %}" class="btn btn-outline-primary">Подробнее</a></span>
-                            <span><a href="{% url 'vacancy_update' vacancy.pk %}" class="btn btn-outline-success">Редактировать</a></span>
+                            <span><a href="{% url 'vacancy_detail' vacancy.pk %}">Подробнее</a></span>
+                            <span><a href="{% url 'vacancy_update' vacancy.pk %}">Редактировать</a></span>
                         </div>
                     </div>
                 {% endfor %}
