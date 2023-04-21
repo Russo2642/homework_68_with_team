@@ -2,37 +2,42 @@
 {% load django_bootstrap5 %}
 
 {% block content %}
-<div class="row">
-    {% include "partial/filtration.html" %}
-    <div class="col-md-9">
-        <div class="row">
-            <div class="col-12">
-                {% for vacancy in vacancies %}
-                <div class="card w-75" style="margin-top: 2rem">
-                    <div class="card-body">
-                        <h4 class="card-title">{{ vacancy.title }}</h4>
-                        <h5>{{ vacancy.salary }}</h5>
-                        <h6>{{ vacancy.get_profession_display }}</h6>
-                        <h6>{{ vacancy.author.first_name }}</h6>
-                        <span><a href="{% url 'vacancy_detail' vacancy.pk %}">Подробнее</a></span>
-                        {% if user.is_authenticated and not user.is_employer %}
-                            {% if user_has_applied.vacancy.pk %}
-                                <button class="btn btn-secondary float-end" disabled>Откликнуться</button>
-                            {% else %}
-                                <a href="{% url 'apply_vacancy' vacancy.pk %}" class="btn btn-success float-end apply-btn" id="apply-btn-{{ vacancy.pk }}" data-vacancy-id="{{ vacancy.pk }}">Откликнуться</a>
-                            {% endif %}
-                        {% endif %}
-                    </div>
+    <div class="row">
+        {% include "partial/filtration.html" %}
+        <div class="col-md-9">
+            <div class="row">
+                <div class="col-12">
+                    {% for vacancy in vacancies %}
+                        {% if vacancy.is_published %}
+                        <div class="card w-75" style="margin-top: 2rem">
+                            <div class="card-body">
+                                <h4 class="card-title">{{ vacancy.title }}</h4>
+                                <h5>{{ vacancy.salary }}</h5>
+                                <h6>{{ vacancy.get_profession_display }}</h6>
+                                <h6>{{ vacancy.author.first_name }}</h6>
+                                <span><a href="{% url 'vacancy_detail' vacancy.pk %}">Подробнее</a></span>
+                                {% if user.is_authenticated and not user.is_employer %}
+                                    {% if user_has_applied.vacancy.pk %}
+                                        <button class="btn btn-secondary float-end" disabled>Откликнуться</button>
+                                    {% else %}
+                                        <a href="{% url 'apply_vacancy' vacancy.pk %}"
+                                           class="btn btn-success float-end apply-btn" id="apply-btn-{{ vacancy.pk }}"
+                                           data-vacancy-id="{{ vacancy.pk }}">Откликнуться</a>
+                                    {% endif %}
+                                {% endif %}
+                                {% endif %}
+
+                            </div>
+                        </div>
+                        {% empty %}
+                        <div class="alert alert-warning" role="alert" style="margin-top: 2rem">
+                            Нет вакансий, соответствующих вашим критериям.
+                        </div>
+                    {% endfor %}
                 </div>
-                {% empty %}
-                <div class="alert alert-warning" role="alert" style="margin-top: 2rem">
-                    Нет вакансий, соответствующих вашим критериям.
-                </div>
-                {% endfor %}
             </div>
+            {% include "partial/pagination.html" %}
         </div>
-        {% include "partial/pagination.html" %}
     </div>
-</div>
 {% endblock %}
 
