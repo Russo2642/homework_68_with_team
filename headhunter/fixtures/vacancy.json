@@ -1,0 +1,280 @@
+[
+{
+  "model": "vacancy.vacancy",
+  "pk": 1,
+  "fields": {
+    "author": 16,
+    "title": "Python developer",
+    "salary": "300000.00",
+    "description": "Требуется разработчик на Python\r\nСтэк:\r\n- Django\r\n- SQL",
+    "profession": "DEVELOPMENT",
+    "exp_from": 1,
+    "exp_before": 3,
+    "is_published": false,
+    "created_at": "2023-04-21T13:32:00.995Z",
+    "updated_at": "2023-04-21T13:32:00.995Z"
+  }
+},
+{
+  "model": "vacancy.vacancy",
+  "pk": 2,
+  "fields": {
+    "author": 16,
+    "title": "Data scientist",
+    "salary": "500000.00",
+    "description": "Asd",
+    "profession": "DATASCIENCE",
+    "exp_from": 1,
+    "exp_before": 3,
+    "is_published": false,
+    "created_at": "2023-04-22T03:56:06.573Z",
+    "updated_at": "2023-04-22T03:56:06.573Z"
+  }
+},
+{
+  "model": "vacancy.vacancy",
+  "pk": 3,
+  "fields": {
+    "author": 16,
+    "title": "Data engineer",
+    "salary": "200000.00",
+    "description": "asd",
+    "profession": "DATAENGINEER",
+    "exp_from": 1,
+    "exp_before": 2,
+    "is_published": false,
+    "created_at": "2023-04-22T03:56:25.094Z",
+    "updated_at": "2023-04-22T03:56:25.094Z"
+  }
+},
+{
+  "model": "vacancy.vacancy",
+  "pk": 4,
+  "fields": {
+    "author": 16,
+    "title": "Tester",
+    "salary": "500000.00",
+    "description": "asdasdasdsadsa",
+    "profession": "TESTER",
+    "exp_from": 0,
+    "exp_before": 1,
+    "is_published": false,
+    "created_at": "2023-04-22T03:57:03.895Z",
+    "updated_at": "2023-04-22T03:57:03.895Z"
+  }
+},
+{
+  "model": "vacancy.vacancy",
+  "pk": 5,
+  "fields": {
+    "author": 17,
+    "title": "Senior Python Developer",
+    "salary": "1000000.00",
+    "description": "qewasdqerqrqdqwqw",
+    "profession": "DEVELOPMENT",
+    "exp_from": 1,
+    "exp_before": 2,
+    "is_published": true,
+    "created_at": "2023-04-22T04:12:15.734Z",
+    "updated_at": "2023-04-22T04:21:20.106Z"
+  }
+},
+{
+  "model": "vacancy.vacancy",
+  "pk": 6,
+  "fields": {
+    "author": 17,
+    "title": "Junior DevOps Engrineer",
+    "salary": "100000.00",
+    "description": "asdasdagetwew",
+    "profession": "DEVOPS",
+    "exp_from": 0,
+    "exp_before": 0,
+    "is_published": true,
+    "created_at": "2023-04-22T04:12:46.926Z",
+    "updated_at": "2023-04-22T04:13:24.658Z"
+  }
+},
+{
+  "model": "vacancy.vacancy",
+  "pk": 7,
+  "fields": {
+    "author": 17,
+    "title": "Java Core Developer",
+    "salary": "5000000.00",
+    "description": "awdqwdqdwq",
+    "profession": "DEVELOPMENT",
+    "exp_from": 1,
+    "exp_before": 2,
+    "is_published": true,
+    "created_at": "2023-04-22T04:13:17.204Z",
+    "updated_at": "2023-04-22T04:21:21.403Z"
+  }
+},
+{
+  "model": "vacancy.vacancy",
+  "pk": 8,
+  "fields": {
+    "author": 17,
+    "title": "Golang Developer",
+    "salary": "10000000.00",
+    "description": "Adssadasdasdas",
+    "profession": "DEVELOPMENT",
+    "exp_from": 1,
+    "exp_before": 2,
+    "is_published": true,
+    "created_at": "2023-04-22T04:13:58.106Z",
+    "updated_at": "2023-04-22T04:21:22.464Z"
+  }
+},
+{
+  "model": "vacancy.vacancy",
+  "pk": 9,
+  "fields": {
+    "author": 17,
+    "title": "ML-specialist",
+    "salary": "1000000.00",
+    "description": "фйцвцйвчйцвйцвйц",
+    "profession": "DATASCIENCE",
+    "exp_from": 1,
+    "exp_before": 2,
+    "is_published": true,
+    "created_at": "2023-04-22T04:14:39.224Z",
+    "updated_at": "2023-04-22T04:21:24.217Z"
+  }
+},
+{
+  "model": "vacancy.vacancy",
+  "pk": 10,
+  "fields": {
+    "author": 17,
+    "title": ".NET разработчик",
+    "salary": "5500000.00",
+    "description": "фвцйвйцвцйвцй",
+    "profession": "DEVELOPMENT",
+    "exp_from": 1,
+    "exp_before": 2,
+    "is_published": true,
+    "created_at": "2023-04-22T04:15:07.789Z",
+    "updated_at": "2023-04-22T04:21:25.674Z"
+  }
+},
+{
+  "model": "vacancy.vacancy",
+  "pk": 11,
+  "fields": {
+    "author": 17,
+    "title": "Java тестировщик",
+    "salary": "1000000.00",
+    "description": "фывйвйцйц",
+    "profession": "TESTER",
+    "exp_from": 3,
+    "exp_before": 5,
+    "is_published": true,
+    "created_at": "2023-04-22T04:15:33.079Z",
+    "updated_at": "2023-04-22T04:21:27.090Z"
+  }
+},
+{
+  "model": "vacancy.vacancy",
+  "pk": 12,
+  "fields": {
+    "author": 18,
+    "title": "Middle Data Engineer",
+    "salary": "5000000.00",
+    "description": "asdasdas",
+    "profession": "DATAENGINEER",
+    "exp_from": 2,
+    "exp_before": 4,
+    "is_published": true,
+    "created_at": "2023-04-22T04:17:25.978Z",
+    "updated_at": "2023-04-22T04:22:16.959Z"
+  }
+},
+{
+  "model": "vacancy.vacancy",
+  "pk": 13,
+  "fields": {
+    "author": 18,
+    "title": "Project manager",
+    "salary": "3000000.00",
+    "description": "qwedqweqwewq",
+    "profession": "OTHER",
+    "exp_from": 1,
+    "exp_before": 2,
+    "is_published": true,
+    "created_at": "2023-04-22T04:18:22.897Z",
+    "updated_at": "2023-04-22T04:22:18.531Z"
+  }
+},
+{
+  "model": "vacancy.vacancy",
+  "pk": 14,
+  "fields": {
+    "author": 18,
+    "title": "Data Analyst",
+    "salary": "123123.00",
+    "description": "qweqweqw",
+    "profession": "OTHER",
+    "exp_from": 1,
+    "exp_before": 2,
+    "is_published": true,
+    "created_at": "2023-04-22T04:18:42.063Z",
+    "updated_at": "2023-04-22T04:22:19.617Z"
+  }
+},
+{
+  "model": "vacancy.vacancy",
+  "pk": 15,
+  "fields": {
+    "author": 18,
+    "title": "Data Governor",
+    "salary": "1123123.00",
+    "description": "qweqwewqewq",
+    "profession": "OTHER",
+    "exp_from": 2,
+    "exp_before": 3,
+    "is_published": true,
+    "created_at": "2023-04-22T04:18:57.936Z",
+    "updated_at": "2023-04-22T04:22:20.963Z"
+  }
+},
+{
+  "model": "vacancy.vacancy",
+  "pk": 16,
+  "fields": {
+    "author": 18,
+    "title": "Ruby специалист",
+    "salary": "300000.00",
+    "description": "йцвйцвйцвцй",
+    "profession": "DEVELOPMENT",
+    "exp_from": 1,
+    "exp_before": 2,
+    "is_published": true,
+    "created_at": "2023-04-22T04:20:04.242Z",
+    "updated_at": "2023-04-22T04:22:22.279Z"
+  }
+},
+{
+  "model": "vacancy.application",
+  "pk": 1,
+  "fields": {
+    "applicant": 1,
+    "vacancy": 1,
+    "created_at": "2023-04-21T13:34:45.805Z",
+    "updated_at": "2023-04-21T13:34:45.805Z"
+  }
+},
+{
+  "model": "vacancy.message",
+  "pk": 1,
+  "fields": {
+    "sender": 1,
+    "recipient": 1,
+    "vacancy_id": 1,
+    "applicant_id": 1,
+    "text": "Asd",
+    "timestamp": "2023-04-21T13:34:54.698Z"
+  }
+}
+]

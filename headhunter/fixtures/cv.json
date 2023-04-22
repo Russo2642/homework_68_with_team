@@ -1,0 +1,78 @@
+[
+{
+  "model": "cv.cv",
+  "pk": 25,
+  "fields": {
+    "user": 1,
+    "category": "DEVELOPMENT",
+    "title": "Golang",
+    "email": "test@test.com",
+    "phone": "87777318242",
+    "salary": null,
+    "date_birth": "1999-02-23",
+    "sex": "MALE",
+    "marital_status": "SINGLE",
+    "address1": "10 mikrorayon",
+    "address2": "23",
+    "city": "ALMATY",
+    "telegram": "https://www.google.com/",
+    "whatsapp": "https://www.google.com/",
+    "linkedin": "https://www.google.com/",
+    "facebook": "https://www.google.com/",
+    "is_published": true,
+    "created_at": "2023-04-18T07:21:31.884Z",
+    "updated_at": "2023-04-21T09:46:15.872Z"
+  }
+},
+{
+  "model": "cv.cv",
+  "pk": 27,
+  "fields": {
+    "user": 19,
+    "category": "DEVELOPMENT",
+    "title": ".NET Developer",
+    "email": "johndoe@gmail.com",
+    "phone": "+7 777 731 8242",
+    "salary": null,
+    "date_birth": "1998-01-10",
+    "sex": "MALE",
+    "marital_status": "MARRIED",
+    "address1": "10 mikrorayon",
+    "address2": "23",
+    "city": "ASTANA",
+    "telegram": "https://www.google.com/",
+    "whatsapp": null,
+    "linkedin": null,
+    "facebook": null,
+    "is_published": true,
+    "created_at": "2023-04-22T04:25:14.478Z",
+    "updated_at": "2023-04-22T04:25:32.057Z"
+  }
+},
+{
+  "model": "cv.jobexperience",
+  "pk": 19,
+  "fields": {
+    "cv": 25,
+    "job_place": "Bank",
+    "job_exp": 3.0,
+    "job_position": "Proger",
+    "job_description": "Работал",
+    "created_at": "2023-04-18T07:21:31.925Z",
+    "updated_at": "2023-04-18T20:32:53.616Z"
+  }
+},
+{
+  "model": "cv.jobexperience",
+  "pk": 21,
+  "fields": {
+    "cv": 27,
+    "job_place": "Kolesa Group",
+    "job_exp": 3.0,
+    "job_position": ".NET Developer",
+    "job_description": "adsadsadsadas",
+    "created_at": "2023-04-22T04:25:30.290Z",
+    "updated_at": "2023-04-22T04:25:30.290Z"
+  }
+}
+]
